@@ -16,6 +16,7 @@
 
 #include "scene.hpp"
 #include "material.hpp"
+#include "Sphere.hpp"
 
 Color Scene::trace(const Ray& ray)
 {
@@ -27,7 +28,7 @@ Color Scene::trace(const Ray& ray)
 	{
 		Hit hit(objects[i]->intersect(ray));
 
-		if (hit.t < min_hit.t)
+		if (hit.distance < min_hit.distance)
 		{
 			min_hit = hit;
 			obj = objects[i];
@@ -35,32 +36,31 @@ Color Scene::trace(const Ray& ray)
 	}
 
 	// No hit? Return background color.
-	if (!obj) return Color(0., 0., 0.);
+	if (!obj)
+		return Color(0., 0., 0.);
 
-	Material* material = obj->material;	// The hit objects material
-	Point hit = ray.at(min_hit.t);		// The hit point
-	Vector N = min_hit.N;				// The normal at hit point
-	Vector V = -ray.D;					// The view vector
+	Material material = *(obj->material);	// The hit objects material
+	Point hit = ray.at(min_hit.distance);	// The hit point
+	Vector normal = min_hit.normal;			// The normal at hit point
+	Vector view_dir = -ray.direction;		// The view vector
 
-	/****************************************************
-	* This is where you should insert the color
-	* calculation (Phong model).
-	*
-	* Given: material, hit, N, V, lights[]
-	* Sought: color
-	*
-	* Hints: (see triple.h)
-	*		Triple.dot(Vector) dot product
-	*		Vector+Vector	  vector sum
-	*		Vector-Vector	  vector difference
-	*		Point-Point		yields vector
-	*		Vector.normalize() normalizes vector, returns length
-	*		double*Color		scales each color component (r,g,b)
-	*		Color*Color		dito
-	*		pow(a,b)		   a to the power of b
-	****************************************************/
+	Color color = Color(0., 0., 0.);
 
-	Color color = material->color;		// place holder
+	// For all lights in the scene
+	for (unsigned int i = 0; i < lights.size(); ++i)
+	{
+		// The vector from the hit point to the light source
+		Vector light_dir = (lights[i]->position - hit).normalized();
+		// The direction of the reflected ray
+		Vector reflect = 2. * (normal.dot(light_dir)) * normal - light_dir;
+
+		// Add ambient light
+		color += material.color * material.ka * lights[i]->color;
+		// Add diffuse light
+		color += material.color * material.kd * lights[i]->color * std::max(0., normal.dot(light_dir));
+		// Add specular light
+		color += material.ks * lights[i]->color * pow(std::max(0., reflect.dot(view_dir)), material.n);
+	}
 
 	return color;
 }

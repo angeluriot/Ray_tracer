@@ -22,41 +22,29 @@
 
 Hit Sphere::intersect(const Ray& ray)
 {
-	/****************************************************
-	* RT1.1: INTERSECTION CALCULATION
-	*
-	* Given: ray, position, r
-	* Sought: intersects? if true: *t
-	*
-	* Insert calculation of ray/sphere intersection here.
-	*
-	* You have the sphere's center (C) and radius (r) as well as
-	* the ray's origin (ray.O) and direction (ray.D).
-	*
-	* If the ray does not intersect the sphere, return Hit::NO_HIT().
-	* Otherwise, return an instance of Hit() with the distance of the
-	* intersection point from the ray origin as t and the normal ad N (see example).
-	****************************************************/
+	// The vector from the ray origin to the sphere center
+	Vector OC = position - ray.origin;
+	// The closest distance from the ray origin to the sphere
+	double t = OC.dot(ray.direction);
 
-	// place holder for actual intersection calculation
+	// The closest point on the ray to the sphere center
+	Vector closest = ray.at(t);
 
-	Vector OC = (position - ray.O).normalized();
-
-	if (OC.dot(ray.D) < 0.999)
+	// If the closest point is outside the sphere, there is no intersection
+	if ((closest - position).length() > radius)
 		return Hit::NO_HIT();
 
-	double t = 1000;
+	// The distance from the closest point to the sphere center
+	double y = (position - ray.at(t)).length();
+	// The distance from the closest point to the intersection points
+	double x = sqrt(pow(radius, 2) - pow(y, 2));
+	// The distance from the ray origin to the first intersection point
+	double distance = t - x;
 
-	/****************************************************
-	* RT1.2: NORMAL CALCULATION
-	*
-	* Given: t, C, r
-	* Sought: N
-	*
-	* Insert calculation of the sphere's normal at the intersection point.
-	****************************************************/
+	// The first intersection point
+	Point intersection = ray.at(distance);
+	// The normal at the first intersection point
+	Vector normal = (intersection - position).normalized();
 
-	Vector N /* = ... */;
-
-	return Hit(t, N);
+	return Hit(distance, normal);
 }

@@ -26,7 +26,7 @@ class Light
 {
 public:
 
-	Light(Point pos,Color c) : position(pos), color(c) {}
+	Light(Point pos, Color c) : position(pos), color(c) {}
 
 	Point position;
 	Color color;
@@ -36,14 +36,14 @@ class Ray
 {
 public:
 
-	Point O;
-	Vector D;
+	Point origin;
+	Vector direction;
 
-	Ray(const Point& from, const Vector& dir): O(from), D(dir) {}
+	Ray(const Point& origin, const Vector& direction): origin(origin), direction(direction) {}
 
 	Point at(double t) const
 	{
-		return O + t * D;
+		return origin + t * direction;
 	}
 
 };
@@ -52,11 +52,11 @@ class Hit
 {
 public:
 
-	double t;
-	Vector N;
+	double distance;
+	Vector normal;
 	bool no_hit;
 
-	Hit(const double t, const Vector& normal, bool nohit = false): t(t), N(normal), no_hit(nohit) {}
+	Hit(const double distance, const Vector& normal, bool no_hit = false): distance(distance), normal(normal), no_hit(no_hit) {}
 
 	static const Hit NO_HIT()
 	{
