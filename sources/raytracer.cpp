@@ -113,6 +113,8 @@ bool Raytracer::readScene(const std::string& inputFilename)
 			YAML::Node doc;
 			parser.GetNextDocument(doc);
 
+			scene->setIsNormalBufferImage(doc["Params"]["isNormalBufferImage"]);
+
 			// Read scene configuration options
 			scene->setEye(parseTriple(doc["Eye"]));
 

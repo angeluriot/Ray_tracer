@@ -1,5 +1,7 @@
 ---
 # scene02
+Params:
+  isNormalBufferImage: true
 
 Eye: [200,200,1000]
 

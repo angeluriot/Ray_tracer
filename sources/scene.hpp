@@ -30,6 +30,7 @@ private:
 	std::vector<Object*> objects;
 	std::vector<Light*> lights;
 	Triple eye;
+	bool isNormalBufferImage;
 
 public:
 
@@ -38,6 +39,15 @@ public:
 	void addObject(Object* o);
 	void addLight(Light* l);
 	void setEye(Triple e);
+	void setIsNormalBufferImage(bool value) 
+	{ 
+		this->isNormalBufferImage = value;
+	}
+
+	bool getIsNormalBufferImage()
+	{ 
+		return isNormalBufferImage; 
+	}
 
 	unsigned int getNumObjects()
 	{
