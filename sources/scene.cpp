@@ -16,7 +16,7 @@
 
 #include "scene.hpp"
 #include "material.hpp"
-#include "Sphere.hpp"
+#include "sphere.hpp"
 
 Color Scene::trace(const Ray& ray)
 {
