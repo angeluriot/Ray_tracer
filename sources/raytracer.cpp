@@ -18,6 +18,9 @@
 #include "raytracer.hpp"
 #include "object.hpp"
 #include "sphere.hpp"
+#include "triangle.hpp"
+#include "plane.hpp"
+#include "cube.hpp"
 #include "material.hpp"
 #include "light.hpp"
 #include "image.hpp"
@@ -67,8 +70,42 @@ Object* Raytracer::parseObject(const YAML::Node& node)
 		node["position"] >> pos;
 		double r;
 		node["radius"] >> r;
-		Sphere* sphere = new Sphere(pos,r);
-		returnObject = sphere;
+		returnObject = new Sphere(pos,r);
+	}
+
+	else if (objectType == "triangle")
+	{
+		Point point_1;
+		node["point_1"] >> point_1;
+		Point point_2;
+		node["point_2"] >> point_2;
+		Point point_3;
+		node["point_3"] >> point_3;
+		returnObject = new Triangle(point_1, point_2, point_3);
+	}
+
+	else if (objectType == "plane")
+	{
+		Point position;
+		node["position"] >> position;
+		Vector normal;
+		node["normal"] >> normal;
+		returnObject = new Plane(position, normal);
+	}
+
+	else if (objectType == "cube")
+	{
+		Point position;
+		node["position"] >> position;
+		double size;
+		node["size"] >> size;
+		double pitch;
+		node["pitch"] >> pitch;
+		double yaw;
+		node["yaw"] >> yaw;
+		double roll;
+		node["roll"] >> roll;
+		returnObject = new Cube(position, size, pitch, yaw, roll);
 	}
 
 	if (returnObject)

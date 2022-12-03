@@ -26,8 +26,8 @@ public:
 
 	virtual Hit intersect(const Ray& ray);
 
-	const Point position;
-	const double radius;
+	Point position;
+	double radius;
 };
 
 #endif
