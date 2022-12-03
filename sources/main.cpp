@@ -14,7 +14,7 @@
 * http://isgwww.cs.uni-magdeburg.de/graphik/lehre/cg2/projekt/rtprojekt.html
 */
 
-#include "raytracer.hpp"
+#include "Raytracer.hpp"
 
 int main(int argc, char* argv[])
 {

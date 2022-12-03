@@ -1,29 +1,16 @@
-/**
-* Framework for a raytracer
-* File: raytracer.cpp
-*
-* Created for the Computer Science course "Introduction Computer Graphics"
-* taught at the University of Groningen by Tobias Isenberg.
-*
-* Author: Maarten Everts
-*
-* This framework is inspired by and uses code of the raytracer framework of
-* Bert Freudenberg that can be found at
-* http://isgwww.cs.uni-magdeburg.de/graphik/lehre/cg2/projekt/rtprojekt.html
-*/
-
 #include <ctype.h>
 #include <fstream>
 #include <assert.h>
-#include "raytracer.hpp"
-#include "object.hpp"
-#include "sphere.hpp"
-#include "triangle.hpp"
-#include "plane.hpp"
-#include "cube.hpp"
-#include "material.hpp"
-#include "light.hpp"
-#include "image.hpp"
+#include "Raytracer.hpp"
+#include "objects/Object.hpp"
+#include "objects/Sphere.hpp"
+#include "objects/Triangle.hpp"
+#include "objects/Plane.hpp"
+#include "objects/meshs/Cube.hpp"
+#include "utils/Material.hpp"
+#include "light/Hit.hpp"
+#include "light/Ray.hpp"
+#include "image/Image.hpp"
 #include "yaml/yaml.h"
 
 // Functions to ease reading from YAML input

@@ -1,19 +1,5 @@
-/**
-* Framework for a raytracer
-* File: image.cpp
-*
-* Created for the Computer Science course "Introduction Computer Graphics"
-* taught at the University of Groningen by Tobias Isenberg.
-*
-* Author: Maarten Everts
-*
-* This framework is inspired by and uses code of the raytracer framework of
-* Bert Freudenberg that can be found at
-* http://isgwww.cs.uni-magdeburg.de/graphik/lehre/cg2/projekt/rtprojekt.html
-*/
-
 #include <fstream>
-#include "image.hpp"
+#include "image/Image.hpp"
 #include "lodepng/lodepng.h"
 
 // Create a picture. Answer false if failed.

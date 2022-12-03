@@ -1,27 +1,12 @@
-/**
-* Framework for a raytracer
-* File: scene.h
-*
-* Created for the Computer Science course "Introduction Computer Graphics"
-* taught at the University of Groningen by Tobias Isenberg.
-*
-* Authors:
-* Maarten Everts
-* Jasper van de Gronde
-*
-* This framework is inspired by and uses code of the raytracer framework of
-* Bert Freudenberg that can be found at
-* http://isgwww.cs.uni-magdeburg.de/graphik/lehre/cg2/projekt/rtprojekt.html
-*/
-
 #ifndef SCENE_HPP
 #define SCENE_HPP
 
 #include <vector>
-#include "triple.hpp"
-#include "light.hpp"
-#include "object.hpp"
-#include "image.hpp"
+#include "utils/Triple.hpp"
+#include "light/Light.hpp"
+#include "light/Ray.hpp"
+#include "objects/Object.hpp"
+#include "image/Image.hpp"
 
 class Scene
 {

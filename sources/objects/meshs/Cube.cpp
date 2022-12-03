@@ -1,6 +1,4 @@
-#include <iostream>
-#include <math.h>
-#include "cube.hpp"
+#include "objects/meshs/Cube.hpp"
 
 Cube::Cube(Point position, double size, double pitch, double yaw, double roll)
 {

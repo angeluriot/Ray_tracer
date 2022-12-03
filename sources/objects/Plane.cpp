@@ -1,6 +1,4 @@
-#include <iostream>
-#include <math.h>
-#include "plane.hpp"
+#include "objects/Plane.hpp"
 
 Hit Plane::intersect(const Ray& ray)
 {

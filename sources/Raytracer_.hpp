@@ -17,9 +17,9 @@
 
 #include <iostream>
 #include <string>
-#include "triple.hpp"
-#include "light.hpp"
-#include "scene.hpp"
+#include "utils/Triple.hpp"
+#include "light/Light.hpp"
+#include "scene/Scene.hpp"
 #include "yaml/yaml.h"
 
 class Raytracer

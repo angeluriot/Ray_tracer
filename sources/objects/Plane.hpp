@@ -1,11 +1,13 @@
 #ifndef PLANE_HPP
 #define PLANE_HPP
 
-#include "object.hpp"
+#include "utils/Triple.hpp"
+#include "objects/Object.hpp"
 
 class Plane : public Object
 {
 public:
+
 	Plane(Point position, Vector normal): position(position), normal(normal) {}
 
 	virtual Hit intersect(const Ray& ray);

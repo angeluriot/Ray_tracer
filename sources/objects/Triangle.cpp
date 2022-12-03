@@ -1,6 +1,4 @@
-#include <iostream>
-#include <math.h>
-#include "triangle.hpp"
+#include "objects/Triangle.hpp"
 
 Hit Triangle::intersect(const Ray& ray)
 {
