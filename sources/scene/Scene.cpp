@@ -5,10 +5,10 @@
 Color Scene::trace(const Ray& ray)
 {
 	// Find hit object and distance
-	Hit min_hit(std::numeric_limits<double>::infinity(),Vector());
-	Object* obj = NULL;
+	Hit min_hit(std::numeric_limits<float>::infinity(), Vector());
+	Object* obj = nullptr;
 
-	for (unsigned int i = 0; i < objects.size(); ++i)
+	for (int i = 0; i < objects.size(); i++)
 	{
 		Hit hit(objects[i]->intersect(ray));
 
@@ -21,67 +21,92 @@ Color Scene::trace(const Ray& ray)
 
 	// No hit? Return background color.
 	if (!obj)
-		return Color(0., 0., 0.);
+		return Color(0.f, 0.f, 0.f);
 
-	Material material = *(obj->material);	// The hit objects material
+	Material material = obj->material;		// The hit objects material
 	Point hit = ray.at(min_hit.distance);	// The hit point
 	Vector normal = min_hit.normal;			// The normal at hit point
 	Vector view_dir = -ray.direction;		// The view vector
 
-	Color color = Color(0., 0., 0.);
+	Color color = Color(0.f, 0.f, 0.f);
 
-	if (getMode() == Mode::Normals)
+	if (mode == Mode::Normals)
 		color = (normal + 1.) / 2.;
 
 	else
 	{
 		// For all lights in the scene
-		for (unsigned int i = 0; i < lights.size(); ++i)
+		for (int i = 0; i < lights.size(); i++)
 		{
 			// The vector from the hit point to the light source
-			Vector light_dir = (lights[i]->position - hit).normalized();
+			Vector light_dir = (lights[i].position - hit).normalized();
 			// The direction of the reflected ray
-			Vector reflect = 2. * (normal.dot(light_dir)) * normal - light_dir;
+			Vector reflect = 2.f * (normal.dot(light_dir)) * normal - light_dir;
 
 			// Add ambient light
-			color += material.color * material.ka * lights[i]->color;
+			color += material.color * material.ambient * lights[i].color;
 			// Add diffuse light
-			color += material.color * material.kd * lights[i]->color * std::max(0., normal.dot(light_dir));
+			color += material.color * material.diffuse * lights[i].color * std::max(0.f, normal.dot(light_dir));
 			// Add specular light
-			color += material.ks * lights[i]->color * pow(std::max(0., reflect.dot(view_dir)), material.n);
+			color += material.specular * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
 		}
 	}
 
 	return color;
 }
 
-void Scene::render(Image& img)
+void Scene::render(Image& image)
 {
-	int w = img.width();
-	int h = img.height();
+	int w = image.width();
+	int h = image.height();
 
 	for (int y = 0; y < h; y++)
 		for (int x = 0; x < w; x++)
 		{
-			Point pixel(x + 0.5, h - 1 - y + 0.5, 0);
+			Point pixel(x + 0.5f, h - 1.f - y + 0.5f, 0.f);
 			Ray ray(eye, (pixel - eye).normalized());
 			Color col = trace(ray);
 			col.clamp();
-			img(x, y) = col;
+			image(x, y) = col;
 		}
 }
 
-void Scene::addObject(Object* o)
+void Scene::add_object(Object* object)
 {
-	objects.push_back(o);
+	objects.push_back(object);
 }
 
-void Scene::addLight(Light* l)
+void Scene::add_light(const Light& light)
 {
-	lights.push_back(l);
+	lights.push_back(light);
 }
 
-void Scene::setEye(Triple e)
+void Scene::set_eye(Point eye)
 {
-	eye = e;
+	this->eye = eye;
+}
+
+void Scene::set_mode(const std::string& mode)
+{
+	if (mode == "default")
+		this->mode = Mode::Default;
+	else if (mode == "normals")
+		this->mode = Mode::Normals;
+	else if (mode == "z-buffer")
+		this->mode = Mode::ZBuffer;
+}
+
+Scene::Mode Scene::get_mode()
+{
+	return mode;
+}
+
+unsigned int Scene::get_nb_objects()
+{
+	return objects.size();
+}
+
+unsigned int Scene::get_nb_lights()
+{
+	return lights.size();
 }

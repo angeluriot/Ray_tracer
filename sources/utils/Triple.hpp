@@ -1,23 +1,25 @@
 #ifndef TRIPLE_HPP
 #define TRIPLE_HPP
 
+#include <iostream>
+
 class Triple
 {
 public:
 
-	explicit Triple(double X = 0, double Y = 0, double Z = 0): x(X), y(Y), z(Z) {}
+	explicit Triple(float x = 0.f, float y = 0.f, float z = 0.f): x(x), y(y), z(z) {}
 
 	Triple operator+(const Triple& t) const
 	{
 		return Triple(x + t.x, y + t.y, z + t.z);
 	}
 
-	Triple operator+(double f) const
+	Triple operator+(float f) const
 	{
 		return Triple(x + f, y + f, z + f);
 	}
 
-	friend Triple operator+(double f, const Triple& t)
+	friend Triple operator+(float f, const Triple& t)
 	{
 		return Triple(f + t.x, f + t.y, f + t.z);
 	}
@@ -32,12 +34,12 @@ public:
 		return Triple(x - t.x, y - t.y, z - t.z);
 	}
 
-	Triple operator-(double f) const
+	Triple operator-(float f) const
 	{
 		return Triple(x - f, y - f, z - f);
 	}
 
-	friend Triple operator-(double f, const Triple& t)
+	friend Triple operator-(float f, const Triple& t)
 	{
 		return Triple(f - t.x, f - t.y, f - t.z);
 	}
@@ -47,19 +49,19 @@ public:
 		return Triple(x * t.x,y * t.y, z * t.z);
 	}
 
-	Triple operator*(double f) const
+	Triple operator*(float f) const
 	{
 		return Triple(x * f, y * f, z * f);
 	}
 
-	friend Triple operator*(double f, const Triple& t)
+	friend Triple operator*(float f, const Triple& t)
 	{
 		return Triple(f * t.x, f * t.y, f * t.z);
 	}
 
-	Triple operator/(double f) const
+	Triple operator/(float f) const
 	{
-		double invf = 1. / f;
+		float invf = 1.f / f;
 		return Triple(x * invf, y * invf, z * invf);
 	}
 
@@ -71,7 +73,7 @@ public:
 		return *this;
 	}
 
-	Triple& operator+=(double f)
+	Triple& operator+=(float f)
 	{
 		x += f;
 		y += f;
@@ -87,7 +89,7 @@ public:
 		return *this;
 	}
 
-	Triple& operator-=(double f)
+	Triple& operator-=(float f)
 	{
 		x -= f;
 		y -= f;
@@ -95,7 +97,7 @@ public:
 		return *this;
 	}
 
-	Triple& operator*=(const double f)
+	Triple& operator*=(const float f)
 	{
 		x *= f;
 		y *= f;
@@ -103,16 +105,16 @@ public:
 		return *this;
 	}
 
-	Triple& operator/=(const double f)
+	Triple& operator/=(const float f)
 	{
-		double invf = 1. / f;
+		float invf = 1.f / f;
 		x *= invf;
 		y *= invf;
 		z *= invf;
 		return *this;
 	}
 
-	double dot(const Triple& t) const
+	float dot(const Triple& t) const
 	{
 		return x * t.x + y * t.y + z * t.z;
 	}
@@ -122,12 +124,12 @@ public:
 		return Triple(y * t.z - z * t.y, z * t.x - x * t.z, x * t.y - y * t.x);
 	}
 
-	double length() const
+	float length() const
 	{
 		return sqrt(length_2());
 	}
 
-	double length_2() const
+	float length_2() const
 	{
 		return x * x + y * y + z * z;
 	}
@@ -139,8 +141,8 @@ public:
 
 	void normalize()
 	{
-		double l = length();
-		double invl = 1. / l;
+		float l = length();
+		float invl = 1.f / l;
 		x *= invl;
 		y *= invl;
 		z *= invl;
@@ -150,51 +152,51 @@ public:
 	friend std::ostream& operator<<(std::ostream& s, const Triple& v);
 
 	// Functions for when used as a Color:
-	void set(double f)
+	void set(float f)
 	{
 		r = g = b = f;
 	}
 
-	void set(double f, double maxValue)
+	void set(float f, float max_value)
 	{
-		set(f / maxValue);
+		set(f / max_value);
 	}
 
-	void set(double red, double green, double blue)
+	void set(float red, float green, float blue)
 	{
 		r = red;
 		g = green;
 		b = blue;
 	}
 
-	void set(double r, double g, double b, double maxValue)
+	void set(float r, float g, float b, float maxValue)
 	{
 		set(r / maxValue, g / maxValue, b / maxValue);
 	}
 
-	void clamp(double maxValue = 1.)
+	void clamp(float max_value = 1.f)
 	{
-		if (r > maxValue) r = maxValue;
-		if (g > maxValue) g = maxValue;
-		if (b > maxValue) b = maxValue;
+		if (r > max_value) r = max_value;
+		if (g > max_value) g = max_value;
+		if (b > max_value) b = max_value;
 	}
 
 	union
 	{
-		double data[3];
+		float data[3];
 
 		struct
 		{
-			double x;
-			double y;
-			double z;
+			float x;
+			float y;
+			float z;
 		};
 
 		struct
 		{
-			double r;
-			double g;
-			double b;
+			float r;
+			float g;
+			float b;
 		};
 	};
 };

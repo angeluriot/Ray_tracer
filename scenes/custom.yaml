@@ -26,65 +26,65 @@ Objects:
   radius: 50
   material: # blue
     color: [0.0,0.0,1.0]
-    ka: 0.2
-    kd: 0.7
-    ks: 0.5
-    n: 64
+    ambient: 0.2
+    diffuse: 0.7
+    specular: 0.5
+    shininess: 64
 - type: sphere
   position: [210,270,300]
   radius: 50
   material: # green
     color: [0.0,1.0,0.0]
-    ka: 0.2
-    kd: 0.3
-    ks: 0.5
-    n: 8
+    ambient: 0.2
+    diffuse: 0.3
+    specular: 0.5
+    shininess: 8
 - type: sphere
   position: [290,170,150]
   radius: 50
   material: # red
     color: [1.0,0.0,0.0]
-    ka: 0.2
-    kd: 0.7
-    ks: 0.8
-    n: 32
+    ambient: 0.2
+    diffuse: 0.7
+    specular: 0.8
+    shininess: 32
 - type: sphere
   position: [140,220,400]
   radius: 50
   material: # yellow
     color: [1.0,0.8,0.0]
-    ka: 0.2
-    kd: 0.8
-    ks: 0.0
-    n: 1
+    ambient: 0.2
+    diffuse: 0.8
+    specular: 0.0
+    shininess: 1
 - type: sphere
   position: [110,130,200]
   radius: 50
   material: # orange
     color: [1.0,0.5,0.0]
-    ka: 0.2
-    kd: 0.8
-    ks: 0.5
-    n: 32
+    ambient: 0.2
+    diffuse: 0.8
+    specular: 0.5
+    shininess: 32
 - type: triangle
   point_1: [200,150,430]
   point_2: [180,130,500]
   point_3: [205,115,490]
   material: # cyan
     color: [0.0,1.0,1.0]
-    ka: 0.2
-    kd: 0.8
-    ks: 0.5
-    n: 100
+    ambient: 0.2
+    diffuse: 0.8
+    specular: 0.5
+    shininess: 100
 - type: plane
   position: [0,0,0]
   normal: [0,0,1]
   material: # gray
     color: [0.4,0.4,0.4]
-    ka: 0.2
-    kd: 0.8
-    ks: 0.5
-    n: 100
+    ambient: 0.2
+    diffuse: 0.8
+    specular: 0.5
+    shininess: 100
 - type: cube
   position: [200,200,500]
   size: 40
@@ -93,7 +93,7 @@ Objects:
   roll: 0.2
   material: # white
     color: [1.0,1.0,1.0]
-    ka: 0.2
-    kd: 0.8
-    ks: 0.5
-    n: 100
+    ambient: 0.2
+    diffuse: 0.8
+    specular: 0.5
+    shininess: 100

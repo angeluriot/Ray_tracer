@@ -8,12 +8,12 @@ class Sphere : public Object
 {
 public:
 
-	Sphere(Point position, double radius): position(position), radius(radius) {}
-
-	virtual Hit intersect(const Ray& ray);
-
 	Point position;
-	double radius;
+	float radius;
+
+	Sphere(const Point& position, float radius): position(position), radius(radius) {}
+
+	Hit intersect(const Ray& ray) const override;
 };
 
 #endif

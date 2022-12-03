@@ -7,10 +7,10 @@ class Light
 {
 public:
 
-	Light(Point pos, Color c) : position(pos), color(c) {}
-
 	Point position;
 	Color color;
+
+	Light(const Point& position, const Color& color): position(position), color(color) {}
 };
 
 #endif

@@ -1,27 +1,27 @@
 #include "objects/meshs/Cube.hpp"
 
-Cube::Cube(Point position, double size, double pitch, double yaw, double roll)
+Cube::Cube(const Point& position, float size, float pitch, float yaw, float roll)
 {
 	// Create the 12 triangles of the cube
-	triangles[0] = Triangle(Point(0., 0., 0.), Point(0., 0., 1.), Point(0., 1., 0.));
-	triangles[1] = Triangle(Point(0., 0., 1.), Point(0., 1., 1.), Point(0., 1., 0.));
-	triangles[2] = Triangle(Point(1., 0., 1.), Point(1., 0., 0.), Point(1., 1., 0.));
-	triangles[3] = Triangle(Point(1., 1., 1.), Point(1., 0., 1.), Point(1., 1., 0.));
-	triangles[4] = Triangle(Point(0., 0., 1.), Point(0., 0., 0.), Point(1., 0., 0.));
-	triangles[5] = Triangle(Point(1., 0., 1.), Point(0., 0., 1.), Point(1., 0., 0.));
-	triangles[6] = Triangle(Point(0., 1., 0.), Point(0., 1., 1.), Point(1., 1., 0.));
-	triangles[7] = Triangle(Point(0., 1., 1.), Point(1., 1., 1.), Point(1., 1., 0.));
-	triangles[8] = Triangle(Point(0., 0., 0.), Point(0., 1., 0.), Point(1., 0., 0.));
-	triangles[9] = Triangle(Point(0., 1., 0.), Point(1., 1., 0.), Point(1., 0., 0.));
-	triangles[10] = Triangle(Point(0., 1., 1.), Point(0., 0., 1.), Point(1., 0., 1.));
-	triangles[11] = Triangle(Point(1., 1., 1.), Point(0., 1., 1.), Point(1., 0., 1.));
+	triangles.push_back(Triangle(Point(0.f, 0.f, 0.f), Point(0.f, 0.f, 1.f), Point(0.f, 1.f, 0.f)));
+	triangles.push_back(Triangle(Point(0.f, 0.f, 1.f), Point(0.f, 1.f, 1.f), Point(0.f, 1.f, 0.f)));
+	triangles.push_back(Triangle(Point(1.f, 0.f, 1.f), Point(1.f, 0.f, 0.f), Point(1.f, 1.f, 0.f)));
+	triangles.push_back(Triangle(Point(1.f, 1.f, 1.f), Point(1.f, 0.f, 1.f), Point(1.f, 1.f, 0.f)));
+	triangles.push_back(Triangle(Point(0.f, 0.f, 1.f), Point(0.f, 0.f, 0.f), Point(1.f, 0.f, 0.f)));
+	triangles.push_back(Triangle(Point(1.f, 0.f, 1.f), Point(0.f, 0.f, 1.f), Point(1.f, 0.f, 0.f)));
+	triangles.push_back(Triangle(Point(0.f, 1.f, 0.f), Point(0.f, 1.f, 1.f), Point(1.f, 1.f, 0.f)));
+	triangles.push_back(Triangle(Point(0.f, 1.f, 1.f), Point(1.f, 1.f, 1.f), Point(1.f, 1.f, 0.f)));
+	triangles.push_back(Triangle(Point(0.f, 0.f, 0.f), Point(0.f, 1.f, 0.f), Point(1.f, 0.f, 0.f)));
+	triangles.push_back(Triangle(Point(0.f, 1.f, 0.f), Point(1.f, 1.f, 0.f), Point(1.f, 0.f, 0.f)));
+	triangles.push_back(Triangle(Point(0.f, 1.f, 1.f), Point(0.f, 0.f, 1.f), Point(1.f, 0.f, 1.f)));
+	triangles.push_back(Triangle(Point(1.f, 1.f, 1.f), Point(0.f, 1.f, 1.f), Point(1.f, 0.f, 1.f)));
 
 	// Apply scale
 	for (auto& triangle : triangles)
 	{
-		triangle.point_1 = (triangle.point_1 - 0.5) * size;
-		triangle.point_2 = (triangle.point_2 - 0.5) * size;
-		triangle.point_3 = (triangle.point_3 - 0.5) * size;
+		triangle.point_1 = (triangle.point_1 - 0.5f) * size;
+		triangle.point_2 = (triangle.point_2 - 0.5f) * size;
+		triangle.point_3 = (triangle.point_3 - 0.5f) * size;
 	}
 
 	for (auto& triangle : triangles)
@@ -91,21 +91,4 @@ Cube::Cube(Point position, double size, double pitch, double yaw, double roll)
 		triangle.point_2 += position;
 		triangle.point_3 += position;
 	}
-}
-
-Hit Cube::intersect(const Ray& ray)
-{
-	// Check for intersection with each triangle
-	Hit hit = Hit::NO_HIT();
-	hit.distance = INFINITY;
-
-	for (auto& triangle : triangles)
-	{
-		Hit h = triangle.intersect(ray);
-
-		if (!h.no_hit && h.distance < hit.distance)
-			hit = h;
-	}
-
-	return hit;
 }

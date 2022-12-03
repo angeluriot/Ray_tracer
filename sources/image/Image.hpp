@@ -1,12 +1,11 @@
 #ifndef IMAGE_HPP
 #define IMAGE_HPP
 
-#include <iostream>
 #include "utils/Triple.hpp"
 
 class Image
 {
-protected:
+private:
 
 	Color* _pixel;
 	int _width;

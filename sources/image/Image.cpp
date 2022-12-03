@@ -1,4 +1,3 @@
-#include <fstream>
 #include "image/Image.hpp"
 #include "lodepng/lodepng.h"
 

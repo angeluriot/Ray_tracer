@@ -7,11 +7,11 @@ class Material
 {
 public:
 
-	Color color;	// Base color
-	double ka;		// Ambient intensity
-	double kd;		// Diffuse intensity
-	double ks;		// Specular intensity
-	double n;		// Exponent for specular highlight size
+	Color color;		// Base color
+	float ambient;		// Ambient intensity
+	float diffuse;		// Diffuse intensity
+	float specular;		// Specular intensity
+	float shininess;	// Exponent for specular highlight size
 
 	Material() {}
 };

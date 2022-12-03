@@ -8,12 +8,12 @@ class Plane : public Object
 {
 public:
 
-	Plane(Point position, Vector normal): position(position), normal(normal) {}
-
-	virtual Hit intersect(const Ray& ray);
-
 	Point position;
 	Vector normal;
+
+	Plane(const Point& position, const Vector& normal): position(position), normal(normal) {}
+
+	Hit intersect(const Ray& ray) const override;
 };
 
 #endif

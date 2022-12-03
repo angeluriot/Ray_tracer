@@ -1,6 +1,6 @@
 #include "objects/Triangle.hpp"
 
-Hit Triangle::intersect(const Ray& ray)
+Hit Triangle::intersect(const Ray& ray) const
 {
 	// Compute plane's normal
 	Vector p0p1 = point_2 - point_1;

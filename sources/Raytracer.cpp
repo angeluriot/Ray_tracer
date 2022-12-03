@@ -15,7 +15,7 @@
 
 // Functions to ease reading from YAML input
 void operator>> (const YAML::Node& node, Triple& t);
-Triple parseTriple(const YAML::Node& node);
+Triple parse_triple(const YAML::Node& node);
 
 void operator>> (const YAML::Node& node, Triple& t)
 {
@@ -25,7 +25,7 @@ void operator>> (const YAML::Node& node, Triple& t)
 	node[2] >> t.z;
 }
 
-Triple parseTriple(const YAML::Node& node)
+Triple parse_triple(const YAML::Node& node)
 {
 	Triple t;
 	node[0] >> t.x;
@@ -34,20 +34,20 @@ Triple parseTriple(const YAML::Node& node)
 	return t;
 }
 
-Material* Raytracer::parseMaterial(const YAML::Node& node)
+Material Raytracer::parse_material(const YAML::Node& node)
 {
-	Material* m = new Material();
-	node["color"] >> m->color;
-	node["ka"] >> m->ka;
-	node["kd"] >> m->kd;
-	node["ks"] >> m->ks;
-	node["n"] >> m->n;
+	Material m;
+	node["color"] >> m.color;
+	node["ambient"] >> m.ambient;
+	node["diffuse"] >> m.diffuse;
+	node["specular"] >> m.specular;
+	node["shininess"] >> m.shininess;
 	return m;
 }
 
-Object* Raytracer::parseObject(const YAML::Node& node)
+Object* Raytracer::parse_object(const YAML::Node& node)
 {
-	Object* returnObject = NULL;
+	Object* returnObject = nullptr;
 	std::string objectType;
 	node["type"] >> objectType;
 
@@ -55,7 +55,7 @@ Object* Raytracer::parseObject(const YAML::Node& node)
 	{
 		Point pos;
 		node["position"] >> pos;
-		double r;
+		float r;
 		node["radius"] >> r;
 		returnObject = new Sphere(pos,r);
 	}
@@ -84,13 +84,13 @@ Object* Raytracer::parseObject(const YAML::Node& node)
 	{
 		Point position;
 		node["position"] >> position;
-		double size;
+		float size;
 		node["size"] >> size;
-		double pitch;
+		float pitch;
 		node["pitch"] >> pitch;
-		double yaw;
+		float yaw;
 		node["yaw"] >> yaw;
-		double roll;
+		float roll;
 		node["roll"] >> roll;
 		returnObject = new Cube(position, size, pitch, yaw, roll);
 	}
@@ -98,23 +98,23 @@ Object* Raytracer::parseObject(const YAML::Node& node)
 	if (returnObject)
 	{
 		// Read the material and attach to object
-		returnObject->material = parseMaterial(node["material"]);
+		returnObject->material = parse_material(node["material"]);
 	}
 
 	return returnObject;
 }
 
-Light* Raytracer::parseLight(const YAML::Node& node)
+Light Raytracer::parse_light(const YAML::Node& node)
 {
 	Point position;
 	node["position"] >> position;
 	Color color;
 	node["color"] >> color;
-	return new Light(position,color);
+	return Light(position,color);
 }
 
 // Read a scene from file
-bool Raytracer::readScene(const std::string& inputFilename)
+bool Raytracer::read_scene(const std::string& inputFilename)
 {
 	// Initialize a new scene
 	scene = new Scene();
@@ -139,10 +139,10 @@ bool Raytracer::readScene(const std::string& inputFilename)
 
 			std::string mode_temp;
 			doc["Params"]["mode"] >> mode_temp;
-			scene->setMode(mode_temp);
+			scene->set_mode(mode_temp);
 
 			// Read scene configuration options
-			scene->setEye(parseTriple(doc["Eye"]));
+			scene->set_eye(parse_triple(doc["Eye"]));
 
 			// Read and parse the scene objects
 			const YAML::Node& sceneObjects = doc["Objects"];
@@ -155,10 +155,10 @@ bool Raytracer::readScene(const std::string& inputFilename)
 
 			for(YAML::Iterator it = sceneObjects.begin(); it != sceneObjects.end(); ++it)
 			{
-				Object* obj = parseObject(*it);
+				Object* obj = parse_object(*it);
 				// Only add object if it is recognized
 				if (obj)
-					scene->addObject(obj);
+					scene->add_object(obj);
 				else
 					std::cerr << "Warning: found object of unknown type, ignored." << std::endl;
 			}
@@ -173,7 +173,7 @@ bool Raytracer::readScene(const std::string& inputFilename)
 			}
 
 			for(YAML::Iterator it = sceneLights.begin(); it != sceneLights.end(); ++it)
-				scene->addLight(parseLight(*it));
+				scene->add_light(parse_light(*it));
 		}
 
 		if (parser)
@@ -187,11 +187,11 @@ bool Raytracer::readScene(const std::string& inputFilename)
 		return false;
 	}
 
-	std::cout << "YAML parsing results: " << scene->getNumObjects() << " objects read." << std::endl;
+	std::cout << "YAML parsing results: " << scene->get_nb_objects() << " objects read." << std::endl;
 	return true;
 }
 
-void Raytracer::renderToFile(const std::string& outputFilename)
+void Raytracer::render_to_file(const std::string& outputFilename)
 {
 	Image img(400, 400);
 	std::cout << "Tracing..." << std::endl;

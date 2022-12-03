@@ -3,18 +3,15 @@
 
 #include "light/Hit.hpp"
 #include "light/Ray.hpp"
-
-class Material;
+#include "utils/Material.hpp"
 
 class Object
 {
 public:
 
-	Material* material;
+	Material material;
 
-	virtual ~Object() {}
-
-	virtual Hit intersect(const Ray& ray) = 0;
+	virtual Hit intersect(const Ray& ray) const = 0;
 };
 
 #endif

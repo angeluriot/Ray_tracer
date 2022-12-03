@@ -1,11 +1,11 @@
 #include "objects/Sphere.hpp"
 
-Hit Sphere::intersect(const Ray& ray)
+Hit Sphere::intersect(const Ray& ray) const
 {
 	// The vector from the ray origin to the sphere center
 	Vector OC = position - ray.origin;
 	// The closest distance from the ray origin to the sphere
-	double t = OC.dot(ray.direction);
+	float t = OC.dot(ray.direction);
 
 	// The closest point on the ray to the sphere center
 	Vector closest = ray.at(t);
@@ -15,11 +15,11 @@ Hit Sphere::intersect(const Ray& ray)
 		return Hit::NO_HIT();
 
 	// The distance from the closest point to the sphere center
-	double y = (position - closest).length();
+	float y = (position - closest).length();
 	// The distance from the closest point to the intersection points
-	double x = sqrt(pow(radius, 2) - pow(y, 2));
+	float x = sqrt(radius * radius - y * y);
 	// The distance from the ray origin to the first intersection point
-	double distance = t - x;
+	float distance = t - x;
 
 	// The first intersection point
 	Point intersection = ray.at(distance);

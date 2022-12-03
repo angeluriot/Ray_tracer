@@ -2,17 +2,13 @@
 #define CUBE_HPP
 
 #include <array>
-#include "objects/Triangle.hpp"
+#include "objects/meshs/Mesh.hpp"
 
-class Cube : public Object
+class Cube : public Mesh
 {
 public:
 
-	Cube(Point position, double size, double pitch, double yaw, double roll);
-
-	virtual Hit intersect(const Ray& ray);
-
-	std::array<Triangle, 12> triangles;
+	Cube(const Point& position, float size, float pitch, float yaw, float roll);
 };
 
 #endif
