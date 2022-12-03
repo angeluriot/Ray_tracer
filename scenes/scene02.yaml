@@ -1,5 +1,3 @@
----
-# scene02
 Params:
   mode: default # default / normals / z-buffer
 
