@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
 
 	if (!raytracer.read_scene(input_file))
 	{
-		std::cerr << "Error: reading scene from " << input_file << " failed - no output generated."<< std::endl;
+		std::cerr << "Error: reading scene from " << input_file << " failed - no output generated." << std::endl;
 		return 1;
 	}
 
