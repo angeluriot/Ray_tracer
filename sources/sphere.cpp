@@ -35,7 +35,7 @@ Hit Sphere::intersect(const Ray& ray)
 		return Hit::NO_HIT();
 
 	// The distance from the closest point to the sphere center
-	double y = (position - ray.at(t)).length();
+	double y = (position - closest).length();
 	// The distance from the closest point to the intersection points
 	double x = sqrt(pow(radius, 2) - pow(y, 2));
 	// The distance from the ray origin to the first intersection point

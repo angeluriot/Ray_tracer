@@ -16,7 +16,7 @@
 
 #include "scene.hpp"
 #include "material.hpp"
-#include "Sphere.hpp"
+#include "sphere.hpp"
 
 Color Scene::trace(const Ray& ray)
 {
@@ -46,22 +46,26 @@ Color Scene::trace(const Ray& ray)
 
 	Color color = Color(0., 0., 0.);
 
-	// For all lights in the scene
-	for (unsigned int i = 0; i < lights.size(); ++i)
-	{
-		// The vector from the hit point to the light source
-		Vector light_dir = (lights[i]->position - hit).normalized();
-		// The direction of the reflected ray
-		Vector reflect = 2. * (normal.dot(light_dir)) * normal - light_dir;
-
-		// Add ambient light
-		color += material.color * material.ka * lights[i]->color;
-		// Add diffuse light
-		color += material.color * material.kd * lights[i]->color * std::max(0., normal.dot(light_dir));
-		// Add specular light
-		color += material.ks * lights[i]->color * pow(std::max(0., reflect.dot(view_dir)), material.n);
+	if(getIsNormalBufferImage()) { 
+		color = (normal+1)/2;
 	}
+	else {
+		// For all lights in the scene
+		for (unsigned int i = 0; i < lights.size(); ++i)
+		{
+			// The vector from the hit point to the light source
+			Vector light_dir = (lights[i]->position - hit).normalized();
+			// The direction of the reflected ray
+			Vector reflect = 2. * (normal.dot(light_dir)) * normal - light_dir;
 
+			// Add ambient light
+			color += material.color * material.ka * lights[i]->color;
+			// Add diffuse light
+			color += material.color * material.kd * lights[i]->color * std::max(0., normal.dot(light_dir));
+			// Add specular light
+			color += material.ks * lights[i]->color * pow(std::max(0., reflect.dot(view_dir)), material.n);
+		}
+	}
 	return color;
 }
 

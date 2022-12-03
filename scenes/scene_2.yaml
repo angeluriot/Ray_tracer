@@ -1,0 +1,84 @@
+---
+# scene02
+Params:
+  isNormalBufferImage: true
+
+Eye: [200,200,1000]
+
+Lights:
+- position: [-1000,600,500]
+  color: [1.0,1.0,1.0]
+
+Objects:
+- type: sphere
+  position: [90,320,-100]
+  radius: 50
+  material: # blue
+    color: [0.0,0.0,1.0]
+    ka: 0.0
+    kd: 0.7
+    ks: 0.0
+    n: 64
+- type: sphere
+  position: [210,270,-300]
+  radius: 50
+  material: # green
+    color: [0.0,1.0,0.0]
+    ka: 0.0
+    kd: 0.3
+    ks: 0.5
+    n: 8
+- type: sphere
+  position: [290,170,-150]
+  radius: 60
+  material: # red
+    color: [1.0,0.0,0.0]
+    ka: 0.2
+    kd: 0.7
+    ks: 0.8
+    n: 32
+- type: sphere
+  position: [290,230,-150]
+  radius: 60
+  material: # white?
+    color: [1.0,1.0,1.0]
+    ka: 0.3
+    kd: 0.7
+    ks: 0.8
+    n: 32
+- type: sphere
+  position: [290,170,-0]
+  radius: 20
+  material:
+    color: [0.5,0.5,0.0]
+    ka: 0.2
+    kd: 0.7
+    ks: 0.8
+    n: 32
+- type: sphere
+  position: [140,220,-400]
+  radius: 50
+  material:
+    color: [1.0,0.8,0.0]
+    ka: 0.2
+    kd: 0.8
+    ks: 0.0
+    n: 1
+- type: sphere
+  position: [110,130,-200]
+  radius: 75
+  material:
+    color: [1.0,0.5,0.0]
+    ka: 0.01
+    kd: 0.06
+    ks: 0.9
+    n: 32
+- type: sphere
+  position: [180,180,-800]
+  radius: 300
+  material:
+    color: [1.0,0.5,0.0]
+    ka: 0.1
+    kd: 0.5
+    ks: 0.3
+    n: 32

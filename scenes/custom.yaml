@@ -11,6 +11,8 @@
 #
 # The example scene description should largely speak for itself. By now
 # it should be clear that the #-character can be used to insert comments.
+Params:
+  isNormalBufferImage: false
 
 Eye: [200,200,1000]
 
