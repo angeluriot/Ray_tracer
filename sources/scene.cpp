@@ -46,10 +46,11 @@ Color Scene::trace(const Ray& ray)
 
 	Color color = Color(0., 0., 0.);
 
-	if(getIsNormalBufferImage()) { 
-		color = (normal+1)/2;
-	}
-	else {
+	if (getMode() == Mode::Normals)
+		color = (normal + 1.) / 2.;
+
+	else
+	{
 		// For all lights in the scene
 		for (unsigned int i = 0; i < lights.size(); ++i)
 		{
@@ -66,6 +67,7 @@ Color Scene::trace(const Ray& ray)
 			color += material.ks * lights[i]->color * pow(std::max(0., reflect.dot(view_dir)), material.n);
 		}
 	}
+
 	return color;
 }
 

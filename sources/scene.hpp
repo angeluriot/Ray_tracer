@@ -25,12 +25,21 @@
 
 class Scene
 {
+public:
+
+	enum class Mode
+	{
+		Default,
+		Normals,
+		ZBuffer
+	};
+
 private:
 
 	std::vector<Object*> objects;
 	std::vector<Light*> lights;
 	Triple eye;
-	bool isNormalBufferImage;
+	Mode mode;
 
 public:
 
@@ -39,14 +48,20 @@ public:
 	void addObject(Object* o);
 	void addLight(Light* l);
 	void setEye(Triple e);
-	void setIsNormalBufferImage(bool value) 
-	{ 
-		this->isNormalBufferImage = value;
+
+	void setMode(const std::string& mode)
+	{
+		if (mode == "default")
+			this->mode = Mode::Default;
+		else if (mode == "normals")
+			this->mode = Mode::Normals;
+		else if (mode == "z-buffer")
+			this->mode = Mode::ZBuffer;
 	}
 
-	bool getIsNormalBufferImage()
-	{ 
-		return isNormalBufferImage; 
+	Mode getMode()
+	{
+		return mode;
 	}
 
 	unsigned int getNumObjects()
