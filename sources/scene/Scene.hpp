@@ -25,6 +25,8 @@ private:
 	std::vector<Light> lights;
 	Point eye;
 	Mode mode;
+	float near_distance;
+	float far_distance;
 
 public:
 
@@ -34,6 +36,7 @@ public:
 	void add_light(const Light& light);
 	void set_eye(Point eye);
 	void set_mode(const std::string& mode);
+	void set_distances(float near, float far);
 	Mode get_mode();
 	unsigned int get_nb_objects();
 	unsigned int get_nb_lights();

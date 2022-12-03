@@ -30,7 +30,13 @@ Color Scene::trace(const Ray& ray)
 
 	Color color = Color(0.f, 0.f, 0.f);
 
-	if (mode == Mode::Normals)
+	if (mode == Mode::ZBuffer)
+	{
+		float zbuffer_value = 1 - ((min_hit.distance - near_distance) / (far_distance - near_distance));
+		color = Color(zbuffer_value, zbuffer_value, zbuffer_value);
+	}
+
+	else if (mode == Mode::Normals)
 		color = (normal + 1.) / 2.;
 
 	else
@@ -94,6 +100,12 @@ void Scene::set_mode(const std::string& mode)
 		this->mode = Mode::Normals;
 	else if (mode == "z-buffer")
 		this->mode = Mode::ZBuffer;
+}
+
+void Scene::set_distances(float near, float far)
+{
+	near_distance = near;
+	far_distance = far;
 }
 
 Scene::Mode Scene::get_mode()
