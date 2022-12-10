@@ -1,5 +1,7 @@
 Params:
   mode: default # default / normals / z-buffer
+  near: 550
+  far: 920
 
 Eye: [200,200,1000]
 

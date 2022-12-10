@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "light/Hit.hpp"
 #include "scene/Scene.hpp"
 #include "utils/Material.hpp"
@@ -30,14 +31,14 @@ Color Scene::trace(const Ray& ray)
 
 	Color color = Color(0.f, 0.f, 0.f);
 
-	if (mode == Mode::ZBuffer)
+	if (mode == Mode::Normals)
+		color = (normal + 1.) / 2.;
+
+	else if (mode == Mode::ZBuffer)
 	{
-		float zbuffer_value = 1 - ((min_hit.distance - near_distance) / (far_distance - near_distance));
+		float zbuffer_value = std::clamp(1.f - ((min_hit.distance - near) / (far - near)), 0.f, 1.f);
 		color = Color(zbuffer_value, zbuffer_value, zbuffer_value);
 	}
-
-	else if (mode == Mode::Normals)
-		color = (normal + 1.) / 2.;
 
 	else
 	{
@@ -104,8 +105,8 @@ void Scene::set_mode(const std::string& mode)
 
 void Scene::set_distances(float near, float far)
 {
-	near_distance = near;
-	far_distance = far;
+	this->near = near;
+	this->far = far;
 }
 
 Scene::Mode Scene::get_mode()

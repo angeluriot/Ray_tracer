@@ -137,12 +137,12 @@ bool Raytracer::read_scene(const std::string& inputFilename)
 			YAML::Node doc;
 			parser.GetNextDocument(doc);
 
-			std::string mode_temp;
-			doc["Params"]["mode"] >> mode_temp;
-			scene->set_mode(mode_temp);
+			std::string mode;
+			doc["Params"]["mode"] >> mode;
+			scene->set_mode(mode);
 
-			if (mode_temp == "z-buffer")
-				scene->set_distances(doc["Distances"]["near"], doc["Distances"]["far"]);
+			if (mode == "z-buffer")
+				scene->set_distances(doc["Params"]["near"], doc["Params"]["far"]);
 
 			// Read scene configuration options
 			scene->set_eye(parse_triple(doc["Eye"]));

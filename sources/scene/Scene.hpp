@@ -25,8 +25,8 @@ private:
 	std::vector<Light> lights;
 	Point eye;
 	Mode mode;
-	float near_distance;
-	float far_distance;
+	float near;
+	float far;
 
 public:
 

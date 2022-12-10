@@ -1,9 +1,7 @@
 Params:
   mode: z-buffer # default / normals / z-buffer
-
-Distances:
-  near: 600
-  far : 920
+  near: 550
+  far: 920
 
 Eye: [200,200,1000]
 
