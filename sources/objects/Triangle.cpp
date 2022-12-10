@@ -9,16 +9,16 @@ Hit Triangle::intersect(const Ray& ray) const
 	normal.normalize();
 
 	// Check if ray and plane are parallel.
-	double NdotRayDirection = normal.dot(ray.direction);
+	float NdotRayDirection = normal.dot(ray.direction);
 
 	if (fabs(NdotRayDirection) < 10e-8)
 		return Hit::NO_HIT();
 
 	// Compute d parameter
-	double d = -normal.dot(point_1);
+	float d = -normal.dot(point_1);
 
 	// Compute t
-	double t = -(normal.dot(ray.origin) + d) / NdotRayDirection;
+	float t = -(normal.dot(ray.origin) + d) / NdotRayDirection;
 
 	// Check if the triangle is in behind the ray
 	if (t < 0.)

@@ -1,0 +1,57 @@
+Params:
+  mode: normals # default / normals / z-buffer
+  near: 550
+  far: 920
+
+Eye: [200,200,1000]
+
+Lights:
+- position: [-200,600,1500]
+  color: [1.0,1.0,1.0]
+
+Objects:
+- type: sphere
+  position: [90,320,100]
+  radius: 50
+  material: # blue
+    color: [0.0,0.0,1.0]
+    ambient: 0.2
+    diffuse: 0.7
+    specular: 0.5
+    shininess: 64
+- type: sphere
+  position: [210,270,300]
+  radius: 50
+  material: # green
+    color: [0.0,1.0,0.0]
+    ambient: 0.2
+    diffuse: 0.3
+    specular: 0.5
+    shininess: 8
+- type: sphere
+  position: [290,170,150]
+  radius: 50
+  material: # red
+    color: [1.0,0.0,0.0]
+    ambient: 0.2
+    diffuse: 0.7
+    specular: 0.8
+    shininess: 32
+- type: sphere
+  position: [140,220,400]
+  radius: 50
+  material: # yellow
+    color: [1.0,0.8,0.0]
+    ambient: 0.2
+    diffuse: 0.8
+    specular: 0.0
+    shininess: 1
+- type: sphere
+  position: [110,130,200]
+  radius: 50
+  material: # orange
+    color: [1.0,0.5,0.0]
+    ambient: 0.2
+    diffuse: 0.8
+    specular: 0.5
+    shininess: 32
