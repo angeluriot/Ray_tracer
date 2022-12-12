@@ -1,3 +1,6 @@
+#include <GL/glew.h>
+#include <SDL.h>
+
 #include "Raytracer.hpp"
 
 int main(int argc, char* argv[])

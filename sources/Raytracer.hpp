@@ -13,17 +13,13 @@ private:
 
 	Scene* scene;
 
-	// Couple of private functions for parsing YAML nodes
 	Material parse_material(const YAML::Node& node);
 	Object* parse_object(const YAML::Node& node);
 	Light parse_light(const YAML::Node& node);
 
 public:
 
-	Raytracer() {}
-
 	bool read_scene(const std::string& inputFilename);
-	void render_to_file(const std::string& outputFilename);
 };
 
 #endif
