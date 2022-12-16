@@ -8,6 +8,7 @@ Color Scene::trace(const Ray& ray)
 	// Find hit object and distance
 	Hit min_hit(std::numeric_limits<float>::infinity(), Vector());
 	Object* obj = nullptr;
+	int obj_index;
 
 	for (int i = 0; i < objects.size(); i++)
 	{
@@ -17,6 +18,7 @@ Color Scene::trace(const Ray& ray)
 		{
 			min_hit = hit;
 			obj = objects[i];
+			obj_index = i;
 		}
 	}
 
@@ -46,16 +48,46 @@ Color Scene::trace(const Ray& ray)
 		for (int i = 0; i < lights.size(); i++)
 		{
 			// The vector from the hit point to the light source
-			Vector light_dir = (lights[i].position - hit).normalized();
+			Vector light_vector = lights[i].position - hit;
+			Vector light_dir = light_vector.normalized();
+
+			Ray reverse_ray(hit, light_dir);
+
+			bool is_shadowed = false;
+
+			if (shadows_on)
+			{
+				double hit_distance = light_vector.length();
+
+				for (int j = 0; j < objects.size(); j++)
+				{
+					if (!(j == obj_index))
+					{
+						Hit reverse_hit(objects[j]->intersect(reverse_ray));
+
+						if (!reverse_hit.no_hit)
+							if (reverse_hit.distance < hit_distance && reverse_hit.distance > 0.001f)
+							{
+								is_shadowed = true;
+								break;
+							}
+					}
+				}
+			}
+
 			// The direction of the reflected ray
 			Vector reflect = 2.f * (normal.dot(light_dir)) * normal - light_dir;
 
 			// Add ambient light
 			color += material.color * material.ambient * lights[i].color;
-			// Add diffuse light
-			color += material.color * material.diffuse * lights[i].color * std::max(0.f, normal.dot(light_dir));
-			// Add specular light
-			color += material.specular * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
+
+			if (!(shadows_on && is_shadowed))
+			{
+				// Add diffuse light
+				color += material.color * material.diffuse * lights[i].color * std::max(0.f, normal.dot(light_dir));
+				// Add specular light
+				color += material.specular * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
+			}
 		}
 	}
 
@@ -107,6 +139,11 @@ void Scene::set_distances(float near, float far)
 {
 	this->near = near;
 	this->far = far;
+}
+
+void Scene::set_shadows(bool shadows_on)
+{
+	this->shadows_on = shadows_on;
 }
 
 Scene::Mode Scene::get_mode()

@@ -2,6 +2,7 @@ Params:
   mode: default # default / normals / z-buffer
   near: 550
   far: 920
+  shadows: false
 
 Eye: [200,200,1000]
 
@@ -55,3 +56,12 @@ Objects:
     diffuse: 0.8
     specular: 0.5
     shininess: 32
+- type: plane
+  position: [0,0,0]
+  normal: [0,0,1]
+  material: # gray
+    color: [0.4,0.4,0.4]
+    ambient: 0.2
+    diffuse: 0.8
+    specular: 0.0
+    shininess: 0

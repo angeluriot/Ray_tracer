@@ -144,6 +144,8 @@ bool Raytracer::read_scene(const std::string& inputFilename)
 			if (mode == "z-buffer")
 				scene->set_distances(doc["Params"]["near"], doc["Params"]["far"]);
 
+			scene->set_shadows(doc["Params"]["shadows"]);
+
 			// Read scene configuration options
 			scene->set_eye(parse_triple(doc["Eye"]));
 

@@ -27,6 +27,7 @@ private:
 	Mode mode;
 	float near;
 	float far;
+	bool shadows_on;
 
 public:
 
@@ -37,6 +38,7 @@ public:
 	void set_eye(Point eye);
 	void set_mode(const std::string& mode);
 	void set_distances(float near, float far);
+	void set_shadows(bool shadows_on);
 	Mode get_mode();
 	unsigned int get_nb_objects();
 	unsigned int get_nb_lights();
