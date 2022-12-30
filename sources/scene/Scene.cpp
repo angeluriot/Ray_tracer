@@ -34,7 +34,7 @@ Color Scene::trace(const Ray& ray)
 	Color color = Color(0.f, 0.f, 0.f);
 
 	if (mode == Mode::Normals)
-		color = (normal + 1.) / 2.;
+		color = (normal + 1.f) / 2.f;
 
 	else if (mode == Mode::ZBuffer)
 	{
@@ -65,12 +65,11 @@ Color Scene::trace(const Ray& ray)
 					{
 						Hit reverse_hit(objects[j]->intersect(reverse_ray));
 
-						if (!reverse_hit.no_hit)
-							if (reverse_hit.distance < hit_distance && reverse_hit.distance > 0.001f)
-							{
-								is_shadowed = true;
-								break;
-							}
+						if (!reverse_hit.no_hit && reverse_hit.distance < hit_distance && reverse_hit.distance > 0.001f)
+						{
+							is_shadowed = true;
+							break;
+						}
 					}
 				}
 			}
