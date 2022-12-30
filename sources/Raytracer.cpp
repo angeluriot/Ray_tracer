@@ -145,6 +145,7 @@ bool Raytracer::read_scene(const std::string& inputFilename)
 				scene->set_distances(doc["Params"]["near"], doc["Params"]["far"]);
 
 			scene->set_shadows(doc["Params"]["shadows"]);
+			scene->set_nb_recursions(doc["Params"]["recursions"]);
 
 			// Read scene configuration options
 			scene->set_eye(parse_triple(doc["Eye"]));

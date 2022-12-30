@@ -28,10 +28,11 @@ private:
 	float near;
 	float far;
 	bool shadows_on;
+	int recursions;
 
 public:
 
-	Color trace(const Ray& ray);
+	Color trace(const Ray& ray, int depth = 0);
 	void render(Image& image);
 	void add_object(Object* object);
 	void add_light(const Light& light);
@@ -39,6 +40,7 @@ public:
 	void set_mode(const std::string& mode);
 	void set_distances(float near, float far);
 	void set_shadows(bool shadows_on);
+	void set_nb_recursions(int recursions);
 	Mode get_mode();
 	unsigned int get_nb_objects();
 	unsigned int get_nb_lights();

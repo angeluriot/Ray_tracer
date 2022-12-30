@@ -3,6 +3,7 @@ Params:
   near: 550
   far: 920
   shadows: false
+  recursions: 0
 
 Eye: [200,200,1000]
 

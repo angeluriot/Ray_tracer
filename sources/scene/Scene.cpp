@@ -3,7 +3,7 @@
 #include "scene/Scene.hpp"
 #include "utils/Material.hpp"
 
-Color Scene::trace(const Ray& ray)
+Color Scene::trace(const Ray& ray, int depth)
 {
 	// Find hit object and distance
 	Hit min_hit(std::numeric_limits<float>::infinity(), Vector());
@@ -74,9 +74,6 @@ Color Scene::trace(const Ray& ray)
 				}
 			}
 
-			// The direction of the reflected ray
-			Vector reflect = 2.f * (normal.dot(light_dir)) * normal - light_dir;
-
 			// Add ambient light
 			color += material.color * material.ambient * lights[i].color;
 
@@ -84,9 +81,19 @@ Color Scene::trace(const Ray& ray)
 			{
 				// Add diffuse light
 				color += material.color * material.diffuse * lights[i].color * std::max(0.f, normal.dot(light_dir));
+				// The direction of the reflected ray
+				Vector reflect = 2.f * (normal.dot(light_dir)) * normal - light_dir;
 				// Add specular light
 				color += material.specular * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
 			}
+		}
+
+		if (depth < recursions && material.specular > 0.f)
+		{
+			Vector reflect = 2.f * (normal.dot(view_dir)) * normal - view_dir;
+			Ray reflected_ray(hit, reflect);
+			Color reflected_color = trace(reflected_ray, depth + 1);
+			color += material.specular * reflected_color;
 		}
 	}
 
@@ -143,6 +150,11 @@ void Scene::set_distances(float near, float far)
 void Scene::set_shadows(bool shadows_on)
 {
 	this->shadows_on = shadows_on;
+}
+
+void Scene::set_nb_recursions(int recursions)
+{
+	this->recursions = recursions;
 }
 
 Scene::Mode Scene::get_mode()
