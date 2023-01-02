@@ -3,7 +3,7 @@ Params:
   near: 550
   far: 920
   shadows: true
-  recursions: 2
+  recursions: 5
 
 Eye: [200,200,1000]
 
@@ -23,6 +23,7 @@ Objects:
     diffuse: 0.7
     specular: 0.5
     shininess: 64
+    refractive_index: 0.0
 - type: sphere
   position: [210,270,300]
   radius: 50
@@ -32,6 +33,7 @@ Objects:
     diffuse: 0.3
     specular: 0.5
     shininess: 8
+    refractive_index: 0.0
 - type: sphere
   position: [290,170,150]
   radius: 50
@@ -41,6 +43,7 @@ Objects:
     diffuse: 0.7
     specular: 0.8
     shininess: 32
+    refractive_index: 0.0
 - type: sphere
   position: [140,220,400]
   radius: 50
@@ -50,6 +53,7 @@ Objects:
     diffuse: 0.8
     specular: 0.0
     shininess: 1
+    refractive_index: 0.0
 - type: sphere
   position: [110,130,200]
   radius: 50
@@ -59,12 +63,14 @@ Objects:
     diffuse: 0.8
     specular: 0.5
     shininess: 32
+    refractive_index: 0.0
 - type: sphere
   position: [200,200,-1000]
   radius: 1000
-  material: # orange
+  material: # gray
     color: [0.4,0.4,0.4]
     ambient: 0.2
     diffuse: 0.8
     specular: 0.0
     shininess: 1
+    refractive_index: 0.0

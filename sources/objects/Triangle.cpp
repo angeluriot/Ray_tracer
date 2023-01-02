@@ -11,7 +11,7 @@ Hit Triangle::intersect(const Ray& ray) const
 	// Check if ray and plane are parallel.
 	float NdotRayDirection = normal.dot(ray.direction);
 
-	if (fabs(NdotRayDirection) < 10e-8)
+	if (fabs(NdotRayDirection) < 0.0001f)
 		return Hit::NO_HIT();
 
 	// Compute d parameter
@@ -21,7 +21,7 @@ Hit Triangle::intersect(const Ray& ray) const
 	float t = -(normal.dot(ray.origin) + d) / NdotRayDirection;
 
 	// Check if the triangle is in behind the ray
-	if (t < 0.)
+	if (t < 0.01f)
 		return Hit::NO_HIT();
 
 	// Compute the intersection point
@@ -35,7 +35,7 @@ Hit Triangle::intersect(const Ray& ray) const
 	Vector vp1 = intersection - point_1;
 	C = edge1.cross(vp1);
 
-	if (normal.dot(C) < 0.)
+	if (normal.dot(C) < 0.f)
 		return Hit::NO_HIT();
 
 	// Edge 2
@@ -43,7 +43,7 @@ Hit Triangle::intersect(const Ray& ray) const
 	Vector vp2 = intersection - point_2;
 	C = edge2.cross(vp2);
 
-	if (normal.dot(C) < 0.)
+	if (normal.dot(C) < 0.f)
 		return Hit::NO_HIT();
 
 	// Edge 3
@@ -51,7 +51,7 @@ Hit Triangle::intersect(const Ray& ray) const
 	Vector vp3 = intersection - point_3;
 	C = edge3.cross(vp3);
 
-	if (normal.dot(C) < 0.)
+	if (normal.dot(C) < 0.f)
 		return Hit::NO_HIT();
 
 	return Hit(t, normal);

@@ -7,9 +7,6 @@ Hit Sphere::intersect(const Ray& ray) const
 	// The closest distance from the ray origin to the sphere
 	float t = OC.dot(ray.direction);
 
-	if (t < 0.f)
-		return Hit::NO_HIT();
-
 	// The closest point on the ray to the sphere center
 	Vector closest = ray.at(t);
 
@@ -24,8 +21,14 @@ Hit Sphere::intersect(const Ray& ray) const
 	// The distance from the ray origin to the first intersection point
 	float distance = t - x;
 
-	if (distance < 0.f)
-		return Hit::NO_HIT();
+	if (distance < 0.01f)
+	{
+		if (t + x < 0.01f)
+			return Hit::NO_HIT();
+
+		// Inside the sphere
+		distance = t + x;
+	}
 
 	// The first intersection point
 	Point intersection = ray.at(distance);

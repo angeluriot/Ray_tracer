@@ -42,6 +42,7 @@ Material Raytracer::parse_material(const YAML::Node& node)
 	node["diffuse"] >> m.diffuse;
 	node["specular"] >> m.specular;
 	node["shininess"] >> m.shininess;
+	node["refractive_index"] >> m.refractive_index;
 	return m;
 }
 
@@ -116,9 +117,6 @@ Light Raytracer::parse_light(const YAML::Node& node)
 // Read a scene from file
 bool Raytracer::read_scene(const std::string& inputFilename)
 {
-	// Initialize a new scene
-	scene = new Scene();
-
 	// Open file stream for reading and have the YAML module parse it
 	std::ifstream fin(inputFilename.c_str());
 
@@ -139,16 +137,16 @@ bool Raytracer::read_scene(const std::string& inputFilename)
 
 			std::string mode;
 			doc["Params"]["mode"] >> mode;
-			scene->set_mode(mode);
+			scene.set_mode(mode);
 
 			if (mode == "z-buffer")
-				scene->set_distances(doc["Params"]["near"], doc["Params"]["far"]);
+				scene.set_distances(doc["Params"]["near"], doc["Params"]["far"]);
 
-			scene->set_shadows(doc["Params"]["shadows"]);
-			scene->set_nb_recursions(doc["Params"]["recursions"]);
+			scene.set_shadows(doc["Params"]["shadows"]);
+			scene.set_nb_recursions(doc["Params"]["recursions"]);
 
 			// Read scene configuration options
-			scene->set_eye(parse_triple(doc["Eye"]));
+			scene.set_eye(parse_triple(doc["Eye"]));
 
 			// Read and parse the scene objects
 			const YAML::Node& sceneObjects = doc["Objects"];
@@ -164,7 +162,7 @@ bool Raytracer::read_scene(const std::string& inputFilename)
 				Object* obj = parse_object(*it);
 				// Only add object if it is recognized
 				if (obj)
-					scene->add_object(obj);
+					scene.add_object(obj);
 				else
 					std::cerr << "Warning: found object of unknown type, ignored." << std::endl;
 			}
@@ -179,7 +177,7 @@ bool Raytracer::read_scene(const std::string& inputFilename)
 			}
 
 			for(YAML::Iterator it = sceneLights.begin(); it != sceneLights.end(); ++it)
-				scene->add_light(parse_light(*it));
+				scene.add_light(parse_light(*it));
 		}
 
 		if (parser)
@@ -193,7 +191,7 @@ bool Raytracer::read_scene(const std::string& inputFilename)
 		return false;
 	}
 
-	std::cout << "YAML parsing results: " << scene->get_nb_objects() << " objects read." << std::endl;
+	std::cout << "YAML parsing results: " << scene.get_nb_objects() << " objects read." << std::endl;
 	return true;
 }
 
@@ -201,7 +199,7 @@ void Raytracer::render_to_file(const std::string& outputFilename)
 {
 	Image img(400, 400);
 	std::cout << "Tracing..." << std::endl;
-	scene->render(img);
+	scene.render(img);
 	std::cout << "Writing image to " << outputFilename << "..." << std::endl;
 	img.write_png(outputFilename.c_str());
 	std::cout << "Done." << std::endl;

@@ -10,6 +10,7 @@ public:
 	Point origin;
 	Vector direction;
 
+	Ray() = default;
 	Ray(const Point& origin, const Vector& direction): origin(origin), direction(direction) {}
 
 	Point at(float t) const

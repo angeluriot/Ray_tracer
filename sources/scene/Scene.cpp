@@ -3,6 +3,25 @@
 #include "scene/Scene.hpp"
 #include "utils/Material.hpp"
 
+Ray get_refracted_ray(Point hit, Ray ray, Vector normal, float n_1, float n_2)
+{
+	float n = n_1 / n_2;
+	float cos_incident = -normal.dot(ray.direction);
+	float sin_t2 = n * n * (1.f - cos_incident * cos_incident);
+
+	// Total internal reflection
+	if (sin_t2 > 1.f)
+	{
+		Vector reflect = 2.f * (normal.dot(-ray.direction)) * normal + ray.direction;
+		return Ray(hit, reflect);
+	}
+
+	// Refraction
+	float cos_t = sqrt(1.f - sin_t2);
+	Vector direction = n * ray.direction + (n * cos_incident - cos_t) * normal;
+	return Ray(hit, direction);
+}
+
 Color Scene::trace(const Ray& ray, int depth)
 {
 	// Find hit object and distance
@@ -44,6 +63,19 @@ Color Scene::trace(const Ray& ray, int depth)
 
 	else
 	{
+		// Compute refraction
+		if (material.refractive_index > 0.f && depth < recursions)
+		{
+			Ray new_ray;
+
+			if (ray.direction.dot(normal) < 0.f)
+				new_ray = get_refracted_ray(hit, ray, normal, 1.f, material.refractive_index);
+			else
+				new_ray = get_refracted_ray(hit, ray, -normal, material.refractive_index, 1.f);
+
+			return trace(new_ray, depth + 1);
+		}
+
 		// For all lights in the scene
 		for (int i = 0; i < lights.size(); i++)
 		{
@@ -51,6 +83,7 @@ Color Scene::trace(const Ray& ray, int depth)
 			Vector light_vector = lights[i].position - hit;
 			Vector light_dir = light_vector.normalized();
 
+			// Compute shadows
 			Ray reverse_ray(hit, light_dir);
 
 			bool is_shadowed = false;
@@ -59,8 +92,8 @@ Color Scene::trace(const Ray& ray, int depth)
 			{
 				double hit_distance = light_vector.length();
 
+				// For all objects in the scene
 				for (int j = 0; j < objects.size(); j++)
-				{
 					if (!(j == obj_index))
 					{
 						Hit reverse_hit(objects[j]->intersect(reverse_ray));
@@ -71,13 +104,13 @@ Color Scene::trace(const Ray& ray, int depth)
 							break;
 						}
 					}
-				}
 			}
 
 			// Add ambient light
 			color += material.color * material.ambient * lights[i].color;
 
-			if (!(shadows_on && is_shadowed))
+			// If not shadowed
+			if (!is_shadowed)
 			{
 				// Add diffuse light
 				color += material.color * material.diffuse * lights[i].color * std::max(0.f, normal.dot(light_dir));
@@ -88,6 +121,7 @@ Color Scene::trace(const Ray& ray, int depth)
 			}
 		}
 
+		// Reflection
 		if (depth < recursions && material.specular > 0.f)
 		{
 			Vector reflect = 2.f * (normal.dot(view_dir)) * normal - view_dir;
