@@ -11,15 +11,15 @@ class Raytracer
 {
 private:
 
-	Scene* scene;
+	static Scene scene;
 
-	Material parse_material(const YAML::Node& node);
-	Object* parse_object(const YAML::Node& node);
-	Light parse_light(const YAML::Node& node);
+	static Material parse_material(const YAML::Node& node);
+	static Object* parse_object(const YAML::Node& node);
+	static Light parse_light(const YAML::Node& node);
 
 public:
 
-	bool read_scene(const std::string& inputFilename);
+	static bool read_scene(const std::string& inputFilename);
 };
 
 #endif
