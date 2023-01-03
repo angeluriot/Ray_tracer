@@ -67,13 +67,25 @@ Color Scene::trace(const Ray& ray, int depth)
 		if (material.refractive_index > 0.f && depth < recursions)
 		{
 			Ray new_ray;
+			Color specular(0.f, 0.f, 0.f);
 
 			if (ray.direction.dot(normal) < 0.f)
+			{
 				new_ray = get_refracted_ray(hit, ray, normal, 1.f, material.refractive_index);
+
+				// Specular reflection
+				for (int i = 0; i < lights.size(); i++)
+				{
+					Vector light_dir = (lights[i].position - hit).normalized();
+					Vector reflect = 2.f * (normal.dot(light_dir)) * normal - light_dir;
+					color += material.specular * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
+				}
+			}
+
 			else
 				new_ray = get_refracted_ray(hit, ray, -normal, material.refractive_index, 1.f);
 
-			return trace(new_ray, depth + 1);
+			return trace(new_ray, depth + 1) + color;
 		}
 
 		// For all lights in the scene
@@ -136,17 +148,36 @@ Color Scene::trace(const Ray& ray, int depth)
 
 void Scene::render(Image& image)
 {
-	int w = image.width();
-	int h = image.height();
+	float w = float(image.width());
+	float h = float(image.height());
+	float mean = (w + h) / 2.f;
+	Vector position = camera.position;
+	Vector direction = camera.direction;
+	Vector up = camera.up;
+	Vector right = camera.direction.cross(camera.up);
+	float fov = 3.14f / 7.85f;
 
-	for (int y = 0; y < h; y++)
-		for (int x = 0; x < w; x++)
+	for (int y = 0; y < image.height(); y++)
+		for (int x = 0; x < image.width(); x++)
 		{
-			Point pixel(x + 0.5f, h - 1.f - y + 0.5f, 0.f);
-			Ray ray(eye, (pixel - eye).normalized());
-			Color col = trace(ray);
-			col.clamp();
-			image(x, y) = col;
+			std::vector<Color> colors;
+
+			for (float i = 0.f; i < 1.f; i += 1.f / float(antialiasing))
+				for (float j = 0.f; j < 1.f; j += 1.f / float(antialiasing))
+				{
+					Point pixel = position + direction + right * ((float(x + i) - w / 2.f) / mean) * fov - up * ((float(y + j) - h / 2.f) / mean) * fov;
+					Ray ray(camera.position, (pixel - camera.position).normalized());
+					Color col = trace(ray);
+					col.clamp();
+					colors.push_back(col);
+				}
+
+			Color color(0.f, 0.f, 0.f);
+
+			for (Color& col : colors)
+				color += col / float(colors.size());
+
+			image(x, y) = color;
 		}
 }
 
@@ -160,9 +191,14 @@ void Scene::add_light(const Light& light)
 	lights.push_back(light);
 }
 
-void Scene::set_eye(Point eye)
+void Scene::set_camera(Camera camera)
 {
-	this->eye = eye;
+	this->camera = camera;
+}
+
+Camera Scene::get_camera() const
+{
+	return camera;
 }
 
 void Scene::set_mode(const std::string& mode)
@@ -189,6 +225,11 @@ void Scene::set_shadows(bool shadows_on)
 void Scene::set_nb_recursions(int recursions)
 {
 	this->recursions = recursions;
+}
+
+void Scene::set_antialiasing(int antialiasing)
+{
+	this->antialiasing = antialiasing;
 }
 
 Scene::Mode Scene::get_mode()

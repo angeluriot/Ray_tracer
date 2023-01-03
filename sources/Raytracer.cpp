@@ -111,7 +111,20 @@ Light Raytracer::parse_light(const YAML::Node& node)
 	node["position"] >> position;
 	Color color;
 	node["color"] >> color;
-	return Light(position,color);
+	return Light(position, color);
+}
+
+Camera Raytracer::parse_camera(const YAML::Node& node)
+{
+	Camera camera;
+	node["position"] >> camera.position;
+	node["direction"] >> camera.direction;
+	camera.direction.normalize();
+	node["up"] >> camera.up;
+	camera.up.normalize();
+	node["resolution"][0] >> camera.resolution[0];
+	node["resolution"][1] >> camera.resolution[1];
+	return camera;
 }
 
 // Read a scene from file
@@ -144,9 +157,10 @@ bool Raytracer::read_scene(const std::string& inputFilename)
 
 			scene.set_shadows(doc["Params"]["shadows"]);
 			scene.set_nb_recursions(doc["Params"]["recursions"]);
+			scene.set_antialiasing(doc["Params"]["antialiasing"]);
 
 			// Read scene configuration options
-			scene.set_eye(parse_triple(doc["Eye"]));
+			scene.set_camera(parse_camera(doc["Camera"]));
 
 			// Read and parse the scene objects
 			const YAML::Node& sceneObjects = doc["Objects"];
@@ -197,7 +211,7 @@ bool Raytracer::read_scene(const std::string& inputFilename)
 
 void Raytracer::render_to_file(const std::string& outputFilename)
 {
-	Image img(400, 400);
+	Image img(scene.get_camera().resolution[0], scene.get_camera().resolution[1]);
 	std::cout << "Tracing..." << std::endl;
 	scene.render(img);
 	std::cout << "Writing image to " << outputFilename << "..." << std::endl;

@@ -4,8 +4,13 @@ Params:
   far: 920
   shadows: true
   recursions: 0
+  antialiasing: 4
 
-Eye: [200,200,1000]
+Camera:
+  position: [200,200,1000]
+  direction: [200,200,0]
+  up: [0,1,0]
+  resolution: [400,400]
 
 Lights:
 - position: [-200,600,1500]
