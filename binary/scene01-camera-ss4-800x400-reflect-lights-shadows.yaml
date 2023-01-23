@@ -1,4 +1,5 @@
-Params:
+Settings:
+  resolution: [800,400]
   mode: default # default / normals / z-buffer
   near: 550
   far: 920
@@ -8,9 +9,8 @@ Params:
 
 Camera:
   position: [200,200,1000]
-  direction: [200,200,0]
+  direction: [0,0,-1]
   up: [0,1,0]
-  resolution: [400,400]
 
 Lights:
 - position: [-200,600,1500]

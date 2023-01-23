@@ -1,11 +1,16 @@
-Params:
+Settings:
+  resolution: [400,400]
   mode: default # default / normals / z-buffer
   near: 550
   far: 920
   shadows: true
-  recursions: 5
+  recursions: 2
+  antialiasing: 2
 
-Eye: [200,200,1000]
+Camera:
+  position: [200,200,1000]
+  direction: [0,0,-1]
+  up: [0,1,0]
 
 Lights:
 - position: [-200,600,1500]
@@ -53,7 +58,7 @@ Objects:
     diffuse: 0.8
     specular: 0.0
     shininess: 1
-    refractive_index: 0.0
+    refractive_index: 1.5
 - type: sphere
   position: [110,130,200]
   radius: 50

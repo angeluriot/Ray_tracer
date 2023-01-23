@@ -11,7 +11,6 @@ public:
 	Point position;
 	Vector direction;
 	Vector up;
-	std::array<int, 2> resolution;
 };
 
 #endif

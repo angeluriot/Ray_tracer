@@ -155,13 +155,15 @@ void Scene::render(Image& image)
 	Vector direction = camera.direction;
 	Vector up = camera.up;
 	Vector right = camera.direction.cross(camera.up);
-	float fov = 3.14f / 7.85f;
+	float fov = 0.4f;
 
+	// Loop over all pixels
 	for (int y = 0; y < image.height(); y++)
 		for (int x = 0; x < image.width(); x++)
 		{
 			std::vector<Color> colors;
 
+			// Antialiasing
 			for (float i = 0.f; i < 1.f; i += 1.f / float(antialiasing))
 				for (float j = 0.f; j < 1.f; j += 1.f / float(antialiasing))
 				{
@@ -174,6 +176,7 @@ void Scene::render(Image& image)
 
 			Color color(0.f, 0.f, 0.f);
 
+			// Average colors
 			for (Color& col : colors)
 				color += col / float(colors.size());
 
@@ -191,16 +194,6 @@ void Scene::add_light(const Light& light)
 	lights.push_back(light);
 }
 
-void Scene::set_camera(Camera camera)
-{
-	this->camera = camera;
-}
-
-Camera Scene::get_camera() const
-{
-	return camera;
-}
-
 void Scene::set_mode(const std::string& mode)
 {
 	if (mode == "default")
@@ -209,32 +202,6 @@ void Scene::set_mode(const std::string& mode)
 		this->mode = Mode::Normals;
 	else if (mode == "z-buffer")
 		this->mode = Mode::ZBuffer;
-}
-
-void Scene::set_distances(float near, float far)
-{
-	this->near = near;
-	this->far = far;
-}
-
-void Scene::set_shadows(bool shadows_on)
-{
-	this->shadows_on = shadows_on;
-}
-
-void Scene::set_nb_recursions(int recursions)
-{
-	this->recursions = recursions;
-}
-
-void Scene::set_antialiasing(int antialiasing)
-{
-	this->antialiasing = antialiasing;
-}
-
-Scene::Mode Scene::get_mode()
-{
-	return mode;
 }
 
 unsigned int Scene::get_nb_objects()

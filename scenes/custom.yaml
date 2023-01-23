@@ -1,4 +1,5 @@
-Params:
+Settings:
+  resolution: [1920,1080]
   mode: default # default / normals / z-buffer
   near: 550
   far: 920
@@ -7,10 +8,9 @@ Params:
   antialiasing: 4
 
 Camera:
-  position: [200,200,1300]
-  direction: [0.0,0.0,-1]
-  up: [0.0,1,0]
-  resolution: [1920,1080]
+  position: [200,200,1000]
+  direction: [0.0,0.0,-1.0]
+  up: [0.0,1.0,0.0]
 
 Lights:
 - position: [-200,600,1500]
@@ -78,17 +78,17 @@ Objects:
     ambient: 0.2
     diffuse: 0.8
     specular: 0.5
-    shininess: 100
+    shininess: 32
     refractive_index: 0.0
 - type: plane
   position: [0,0,0]
-  normal: [0,0,1]
+  normal: [0,0.3,0.7]
   material: # gray
     color: [0.4,0.4,0.4]
     ambient: 0.2
     diffuse: 0.8
-    specular: 0.5
-    shininess: 100
+    specular: 0.0
+    shininess: 32
     refractive_index: 0.0
 - type: cube
   position: [200,200,500]
@@ -101,5 +101,5 @@ Objects:
     ambient: 0.2
     diffuse: 0.8
     specular: 0.5
-    shininess: 100
+    shininess: 32
     refractive_index: 0.0

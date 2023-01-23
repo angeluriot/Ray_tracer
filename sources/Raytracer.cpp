@@ -34,6 +34,22 @@ Triple parse_triple(const YAML::Node& node)
 	return t;
 }
 
+void Raytracer::parse_settings(const YAML::Node& node)
+{
+	node["resolution"][0] >> scene.resolution[0];
+	node["resolution"][1] >> scene.resolution[1];
+
+	std::string mode;
+	node["mode"] >> mode;
+	scene.set_mode(mode);
+
+	node["near"] >> scene.near;
+	node["far"] >> scene.far;
+	node["shadows"] >> scene.shadows_on;
+	node["recursions"] >> scene.recursions;
+	node["antialiasing"] >> scene.antialiasing;
+}
+
 Material Raytracer::parse_material(const YAML::Node& node)
 {
 	Material m;
@@ -78,6 +94,7 @@ Object* Raytracer::parse_object(const YAML::Node& node)
 		node["position"] >> position;
 		Vector normal;
 		node["normal"] >> normal;
+		normal.normalize();
 		returnObject = new Plane(position, normal);
 	}
 
@@ -122,8 +139,6 @@ Camera Raytracer::parse_camera(const YAML::Node& node)
 	camera.direction.normalize();
 	node["up"] >> camera.up;
 	camera.up.normalize();
-	node["resolution"][0] >> camera.resolution[0];
-	node["resolution"][1] >> camera.resolution[1];
 	return camera;
 }
 
@@ -148,19 +163,9 @@ bool Raytracer::read_scene(const std::string& inputFilename)
 			YAML::Node doc;
 			parser.GetNextDocument(doc);
 
-			std::string mode;
-			doc["Params"]["mode"] >> mode;
-			scene.set_mode(mode);
+			parse_settings(doc["Settings"]);
 
-			if (mode == "z-buffer")
-				scene.set_distances(doc["Params"]["near"], doc["Params"]["far"]);
-
-			scene.set_shadows(doc["Params"]["shadows"]);
-			scene.set_nb_recursions(doc["Params"]["recursions"]);
-			scene.set_antialiasing(doc["Params"]["antialiasing"]);
-
-			// Read scene configuration options
-			scene.set_camera(parse_camera(doc["Camera"]));
+			scene.camera = parse_camera(doc["Camera"]);
 
 			// Read and parse the scene objects
 			const YAML::Node& sceneObjects = doc["Objects"];
@@ -211,7 +216,7 @@ bool Raytracer::read_scene(const std::string& inputFilename)
 
 void Raytracer::render_to_file(const std::string& outputFilename)
 {
-	Image img(scene.get_camera().resolution[0], scene.get_camera().resolution[1]);
+	Image img(scene.resolution[0], scene.resolution[1]);
 	std::cout << "Tracing..." << std::endl;
 	scene.render(img);
 	std::cout << "Writing image to " << outputFilename << "..." << std::endl;
