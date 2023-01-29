@@ -10,8 +10,11 @@ class Object
 public:
 
 	Material material;
+	int texture_png;
 
 	virtual Hit intersect(const Ray& ray) const = 0;
+
+	//virtual void compute_texture() const = 0;
 };
 
 #endif

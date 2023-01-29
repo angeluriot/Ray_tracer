@@ -37,3 +37,8 @@ Hit Sphere::intersect(const Ray& ray) const
 
 	return Hit(distance, normal);
 }
+
+void Sphere::compute_texture() const
+{
+	
+}

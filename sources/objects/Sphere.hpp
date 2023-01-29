@@ -14,6 +14,8 @@ public:
 	Sphere(const Point& position, float radius): position(position), radius(radius) {}
 
 	Hit intersect(const Ray& ray) const override;
+
+	void compute_texture() const;
 };
 
 #endif
