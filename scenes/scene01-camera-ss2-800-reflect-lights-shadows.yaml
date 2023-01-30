@@ -6,6 +6,7 @@ Settings:
   shadows: true
   recursions: 2
   antialiasing: 2
+  gooch: false
 
 Camera:
   position: [200,200,1000]

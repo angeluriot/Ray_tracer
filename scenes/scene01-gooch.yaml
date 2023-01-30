@@ -6,7 +6,7 @@ Settings:
   shadows: true
   recursions: 2
   antialiasing: 2
-  gooch: false
+  gooch: true
 
 Camera:
   position: [200,200,1000]
@@ -80,3 +80,9 @@ Objects:
     specular: 0.0
     shininess: 1
     refractive_index: 0.0
+
+Gooch:
+  b: 0.55
+  y: 0.3
+  alpha: 0.25
+  beta: 0.5

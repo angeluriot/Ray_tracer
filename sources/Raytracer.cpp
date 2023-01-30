@@ -48,6 +48,15 @@ void Raytracer::parse_settings(const YAML::Node& node)
 	node["shadows"] >> scene.shadows_on;
 	node["recursions"] >> scene.recursions;
 	node["antialiasing"] >> scene.antialiasing;
+	node["gooch"] >> scene.gooch;
+}
+
+void Raytracer::parse_gooch(const YAML::Node& node)
+{
+	node["b"] >> scene.b;
+	node["y"] >> scene.y;
+	node["alpha"] >> scene.alpha;
+	node["beta"] >> scene.beta;
 }
 
 Material Raytracer::parse_material(const YAML::Node& node)
@@ -164,6 +173,9 @@ bool Raytracer::read_scene(const std::string& inputFilename)
 			parser.GetNextDocument(doc);
 
 			parse_settings(doc["Settings"]);
+
+			if (scene.gooch)
+				parse_gooch(doc["Gooch"]);
 
 			scene.camera = parse_camera(doc["Camera"]);
 
