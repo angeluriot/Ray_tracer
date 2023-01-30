@@ -115,7 +115,11 @@ Object* Raytracer::parse_object(const YAML::Node& node)
 
 	if (returnObject)
 	{
-		returnObject->texture_png = node["texture"];
+		std::string texture_path;
+		node["texture"] >> texture_path;
+
+		if (texture_path != "none")
+			returnObject->texture = new Image(texture_path.data());
 
 		// Read the material and attach to object
 		returnObject->material = parse_material(node["material"]);

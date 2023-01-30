@@ -25,7 +25,7 @@ Ray get_refracted_ray(Point hit, Ray ray, Vector normal, float n_1, float n_2)
 Color Scene::trace(const Ray& ray, int depth)
 {
 	// Find hit object and distance
-	Hit min_hit(std::numeric_limits<float>::infinity(), Vector());
+	Hit min_hit(std::numeric_limits<float>::infinity(), Vector(), Color());
 	Object* obj = nullptr;
 	int obj_index;
 
@@ -119,13 +119,13 @@ Color Scene::trace(const Ray& ray, int depth)
 			}
 
 			// Add ambient light
-			color += material.color * material.ambient * lights[i].color;
+			color += min_hit.color * material.ambient * lights[i].color;
 
 			// If not shadowed
 			if (!is_shadowed)
 			{
 				// Add diffuse light
-				color += material.color * material.diffuse * lights[i].color * std::max(0.f, normal.dot(light_dir));
+				color += min_hit.color * material.diffuse * lights[i].color * std::max(0.f, normal.dot(light_dir));
 				// The direction of the reflected ray
 				Vector reflect = 2.f * (normal.dot(light_dir)) * normal - light_dir;
 				// Add specular light

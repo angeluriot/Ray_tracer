@@ -4,17 +4,16 @@
 #include "light/Hit.hpp"
 #include "light/Ray.hpp"
 #include "utils/Material.hpp"
+#include "image/Image.hpp"
 
 class Object
 {
 public:
 
 	Material material;
-	int texture_png;
+	Image* texture;
 
 	virtual Hit intersect(const Ray& ray) const = 0;
-
-	//virtual void compute_texture() const = 0;
 };
 
 #endif

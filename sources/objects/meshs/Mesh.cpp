@@ -5,7 +5,7 @@ Mesh::~Mesh() {}
 Hit Mesh::intersect(const Ray& ray) const
 {
 	// Check for intersection with each triangle
-	Hit min_hit(std::numeric_limits<float>::infinity(), Vector());
+	Hit min_hit(std::numeric_limits<float>::infinity(), Vector(), Color());
 
 	for (auto& triangle : triangles)
 	{

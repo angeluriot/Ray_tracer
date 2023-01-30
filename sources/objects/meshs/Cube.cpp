@@ -91,4 +91,6 @@ Cube::Cube(const Point& position, float size, float pitch, float yaw, float roll
 		triangle.point_2 += position;
 		triangle.point_3 += position;
 	}
+
+	texture = nullptr;
 }
