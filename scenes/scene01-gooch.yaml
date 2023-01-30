@@ -14,10 +14,8 @@ Camera:
   up: [0,1,0]
 
 Lights:
-- position: [-200,600,1500]
-  color: [0.4,0.4,0.8]
-- position: [600,600,1500]
-  color: [0.8,0.8,0.4]
+- position: [-1000,600,400]
+  color: [1.0,1.0,1.0]
 
 Objects:
 - type: sphere
@@ -59,7 +57,7 @@ Objects:
     diffuse: 0.8
     specular: 0.0
     shininess: 1
-    refractive_index: 1.5
+    refractive_index: 0.0
 - type: sphere
   position: [110,130,200]
   radius: 50
