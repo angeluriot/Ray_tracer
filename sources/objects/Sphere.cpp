@@ -1,5 +1,17 @@
 #include "objects/Sphere.hpp"
 
+
+constexpr float PI = 3.141592653589793f;
+
+Sphere::Sphere(const Point& position, float radius, const Vector& north, const Vector& start)
+{
+	this->position = position;
+	this->radius = radius;
+	this->north = north;
+	this->start = start;
+	texture = nullptr;
+}
+
 Hit Sphere::intersect(const Ray& ray) const
 {
 	// The vector from the ray origin to the sphere center
@@ -35,5 +47,12 @@ Hit Sphere::intersect(const Ray& ray) const
 	// The normal at the first intersection point
 	Vector normal = (intersection - position).normalized();
 
-	return Hit(distance, normal);
+	if (!texture)
+		return Hit(distance, normal, material.color);
+
+	float u = 0.5f + atan2(normal.x, normal.z) / (2.f * PI);
+	float v = acos(normal.dot(north)) / PI;
+	Color color = texture->colorAt(u, v);
+
+	return Hit(distance, normal, color);
 }

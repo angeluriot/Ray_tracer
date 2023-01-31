@@ -1,5 +1,13 @@
 #include "objects/Triangle.hpp"
 
+Triangle::Triangle(const Point& point_1, const Point& point_2, const Point& point_3)
+{
+	this->point_1 = point_1;
+	this->point_2 = point_2;
+	this->point_3 = point_3;
+	texture = nullptr;
+}
+
 Hit Triangle::intersect(const Ray& ray) const
 {
 	// Compute plane's normal
@@ -54,5 +62,5 @@ Hit Triangle::intersect(const Ray& ray) const
 	if (normal.dot(C) < 0.f)
 		return Hit::NO_HIT();
 
-	return Hit(t, normal);
+	return Hit(t, normal, material.color);
 }

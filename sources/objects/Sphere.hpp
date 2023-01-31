@@ -10,9 +10,10 @@ public:
 
 	Point position;
 	float radius;
+	Vector north;
+	Vector start;
 
-	Sphere(const Point& position, float radius): position(position), radius(radius) {}
-
+	Sphere(const Point& position, float radius, const Vector& north, const Vector& start);
 	Hit intersect(const Ray& ray) const override;
 };
 

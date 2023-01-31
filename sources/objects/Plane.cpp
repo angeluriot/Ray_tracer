@@ -1,5 +1,12 @@
 #include "objects/Plane.hpp"
 
+Plane::Plane(const Point& position, const Vector& normal)
+{
+	this->position = position;
+	this->normal = normal;
+	texture = nullptr;
+}
+
 Hit Plane::intersect(const Ray& ray) const
 {
 	// Compute anglz between ray and plane's normal
@@ -12,7 +19,7 @@ Hit Plane::intersect(const Ray& ray) const
 		float t = v.dot(normal) / denom;
 
 		if (t > 0.01f)
-			return Hit(t, normal);
+			return Hit(t, normal, material.color);
 	}
 
 	return Hit::NO_HIT();

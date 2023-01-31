@@ -25,7 +25,7 @@ Ray get_refracted_ray(Point hit, Ray ray, Vector normal, float n_1, float n_2)
 Color Scene::trace(const Ray& ray, int depth)
 {
 	// Find hit object and distance
-	Hit min_hit(std::numeric_limits<float>::infinity(), Vector());
+	Hit min_hit(std::numeric_limits<float>::infinity(), Vector(), Color());
 	Object* obj = nullptr;
 	int obj_index;
 
@@ -118,14 +118,33 @@ Color Scene::trace(const Ray& ray, int depth)
 					}
 			}
 
-			// Add ambient light
-			color += material.color * material.ambient * lights[i].color;
-
-			// If not shadowed
-			if (!is_shadowed)
+			if (!gooch)
 			{
-				// Add diffuse light
-				color += material.color * material.diffuse * lights[i].color * std::max(0.f, normal.dot(light_dir));
+				// Add ambient light
+				color += min_hit.color * material.ambient * lights[i].color;
+
+				// If not shadowed
+				if (!is_shadowed)
+				{
+					// Add diffuse light
+					color += min_hit.color * material.diffuse * lights[i].color * std::max(0.f, normal.dot(light_dir));
+					// The direction of the reflected ray
+					Vector reflect = 2.f * (normal.dot(light_dir)) * normal - light_dir;
+					// Add specular light
+					color += material.specular * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
+				}
+			}
+
+			else
+			{
+				Vector k_b = Vector(0.f, 0.f, b);
+				Vector k_y = Vector(y, y, 0.f);
+				Vector k_cool = k_b + alpha * lights[i].color * min_hit.color * material.diffuse;
+				Vector k_warm = k_y + beta  * lights[i].color * min_hit.color * material.diffuse;
+				Vector i_gooch = k_cool * (1.f - normal.dot(light_dir)) / 2.f + k_warm * (1.f + normal.dot(light_dir)) / 2.f;
+
+				color += i_gooch;
+
 				// The direction of the reflected ray
 				Vector reflect = 2.f * (normal.dot(light_dir)) * normal - light_dir;
 				// Add specular light
@@ -133,13 +152,16 @@ Color Scene::trace(const Ray& ray, int depth)
 			}
 		}
 
-		// Reflection
-		if (depth < recursions && material.specular > 0.f)
+		if (!gooch)
 		{
-			Vector reflect = 2.f * (normal.dot(view_dir)) * normal - view_dir;
-			Ray reflected_ray(hit, reflect);
-			Color reflected_color = trace(reflected_ray, depth + 1);
-			color += material.specular * reflected_color;
+			// Reflection
+			if (depth < recursions && material.specular > 0.f)
+			{
+				Vector reflect = 2.f * (normal.dot(view_dir)) * normal - view_dir;
+				Ray reflected_ray(hit, reflect);
+				Color reflected_color = trace(reflected_ray, depth + 1);
+				color += material.specular * reflected_color;
+			}
 		}
 	}
 

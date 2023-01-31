@@ -11,8 +11,7 @@ public:
 	Point position;
 	Vector normal;
 
-	Plane(const Point& position, const Vector& normal): position(position), normal(normal) {}
-
+	Plane(const Point& position, const Vector& normal);
 	Hit intersect(const Ray& ray) const override;
 };
 

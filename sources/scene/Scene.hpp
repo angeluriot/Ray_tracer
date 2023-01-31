@@ -35,6 +35,12 @@ public:
 	bool shadows_on;
 	int recursions;
 	int antialiasing;
+	bool gooch;
+
+	float b;
+	float y;
+	float alpha;
+	float beta;
 
 	Color trace(const Ray& ray, int depth = 0);
 	void render(Image& image);

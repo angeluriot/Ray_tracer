@@ -44,8 +44,8 @@ void Image::read_png(const char* filename)
 	// Decode the png
 	LodePNG::Decoder decoder;
 	decoder.decode(image, buffer.empty() ? 0 : &buffer[0], (unsigned)buffer.size());
-	std::cout << decoder.getChannels() << std::endl;
-	std::cout << decoder.getBpp() << std::endl;
+	//std::cout << decoder.getChannels() << std::endl;
+	//std::cout << decoder.getBpp() << std::endl;
 
 	if (decoder.getChannels() < 3 || decoder.getBpp() < 24)
 	{
