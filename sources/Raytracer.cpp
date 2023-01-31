@@ -6,6 +6,7 @@
 #include "objects/Sphere.hpp"
 #include "objects/Triangle.hpp"
 #include "objects/Plane.hpp"
+#include "objects/meshs/OBJ_object.hpp"
 #include "objects/meshs/Cube.hpp"
 #include "utils/Material.hpp"
 #include "light/Hit.hpp"
@@ -124,6 +125,11 @@ Object* Raytracer::parse_object(const YAML::Node& node)
 		float roll;
 		node["roll"] >> roll;
 		returnObject = new Cube(position, size, pitch, yaw, roll);
+	}
+
+	else if (objectType == "obj_object")
+	{
+		returnObject = new OBJ_object("dolphins.obj");
 	}
 
 	if (returnObject)
