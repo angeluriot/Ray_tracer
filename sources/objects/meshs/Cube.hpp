@@ -8,6 +8,7 @@ class Cube : public Mesh
 {
 public:
 
+	Cube() = default;
 	Cube(const Point& position, float size, float pitch, float yaw, float roll);
 };
 

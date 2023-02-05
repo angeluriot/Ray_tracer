@@ -126,6 +126,23 @@ Object* Raytracer::parse_object(const YAML::Node& node)
 		returnObject = new Cube(position, size, pitch, yaw, roll);
 	}
 
+	else if (objectType == "obj")
+	{
+		std::string path;
+		node["file"] >> path;
+		Point position;
+		node["position"] >> position;
+		float size;
+		node["size"] >> size;
+		float pitch;
+		node["pitch"] >> pitch;
+		float yaw;
+		node["yaw"] >> yaw;
+		float roll;
+		node["roll"] >> roll;
+		returnObject = new Mesh(path, position, size, pitch, yaw, roll);
+	}
+
 	if (returnObject)
 	{
 		std::string texture_path;

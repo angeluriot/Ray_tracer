@@ -1,3 +1,3 @@
-.\Ray_tracer.exe .\custom.yaml .\custom.png
-.\Ray_tracer.exe .\scene01-gooch.yaml .\scene01-gooch.png
-.\Ray_tracer.exe .\scene01-textures.yaml .\scene01-textures.png
+.\Ray_tracer.exe .\plane_cube.yaml .\plane_cube.png
+.\Ray_tracer.exe .\scene01-dolphin.yaml .\scene01-dolphin.png
+.\Ray_tracer.exe .\coolest.yaml .\coolest.png

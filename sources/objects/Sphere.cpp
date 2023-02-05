@@ -7,8 +7,8 @@ Sphere::Sphere(const Point& position, float radius, const Vector& north, const V
 {
 	this->position = position;
 	this->radius = radius;
-	this->north = north;
-	this->start = start;
+	this->north = north.normalized();
+	this->start = start.normalized();
 	texture = nullptr;
 }
 
@@ -50,8 +50,16 @@ Hit Sphere::intersect(const Ray& ray) const
 	if (!texture)
 		return Hit(distance, normal, material.color);
 
-	float u = 0.5f + atan2(normal.x, normal.z) / (2.f * PI);
+	// Project the normal onto the plane defined by the north vector
+	Vector projected_3d = normal.dot(north) * north / north.length_2();
+	Vector projected_3d_plane = normal - projected_3d;
+	float projected_2d_x = projected_3d_plane.dot(start);
+	float projected_2d_y = projected_3d_plane.dot(north.cross(start));
+
+	// Calculate the texture coordinates
+	float u = 1.f - (0.5f + atan2(projected_2d_x, projected_2d_y) / (2.f * PI));
 	float v = acos(normal.dot(north)) / PI;
+
 	Color color = texture->colorAt(u, v);
 
 	return Hit(distance, normal, color);

@@ -2,6 +2,7 @@
 #define TRIPLE_HPP
 
 #include <iostream>
+#include <math.h>
 
 class Triple
 {
