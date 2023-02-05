@@ -1,11 +1,12 @@
 Settings:
-  resolution: [1920,1080]
+  resolution: [800,800]
   mode: default # default / normals / z-buffer
   near: 550
   far: 920
   shadows: true
   recursions: 10
-  antialiasing: 4
+  antialiasing: 2
+  gooch: false
 
 Camera:
   position: [200,200,1000]
@@ -22,6 +23,9 @@ Objects:
 - type: sphere
   position: [90,320,100]
   radius: 50
+  north: [0,1,0]
+  start: [0,0,1]
+  texture: none
   material: # blue
     color: [0.0,0.0,1.0]
     ambient: 0.2
@@ -32,6 +36,9 @@ Objects:
 - type: sphere
   position: [210,270,300]
   radius: 50
+  north: [0,1,0]
+  start: [0,0,1]
+  texture: none
   material: # green
     color: [0.0,1.0,0.0]
     ambient: 0.2
@@ -42,6 +49,9 @@ Objects:
 - type: sphere
   position: [290,170,150]
   radius: 50
+  north: [0,1,0]
+  start: [0,0,1]
+  texture: none
   material: # red
     color: [1.0,0.0,0.0]
     ambient: 0.2
@@ -52,6 +62,9 @@ Objects:
 - type: sphere
   position: [140,220,400]
   radius: 50
+  north: [0,1,0]
+  start: [0,0,1]
+  texture: none
   material: # yellow
     color: [1.0,0.8,0.0]
     ambient: 0.2
@@ -62,6 +75,9 @@ Objects:
 - type: sphere
   position: [110,130,200]
   radius: 50
+  north: [0,1,0]
+  start: [0,0,1]
+  texture: none
   material: # orange
     color: [1.0,0.5,0.0]
     ambient: 0.2
@@ -73,6 +89,7 @@ Objects:
   point_1: [200,150,430]
   point_2: [180,130,500]
   point_3: [205,115,490]
+  texture: none
   material: # cyan
     color: [0.0,1.0,1.0]
     ambient: 0.2
@@ -83,6 +100,7 @@ Objects:
 - type: plane
   position: [0,0,0]
   normal: [0,0.3,0.7]
+  texture: none
   material: # gray
     color: [0.4,0.4,0.4]
     ambient: 0.2
@@ -96,6 +114,7 @@ Objects:
   pitch: 0.5
   yaw: 0.35
   roll: 0.2
+  texture: none
   material: # white
     color: [1.0,1.0,1.0]
     ambient: 0.2

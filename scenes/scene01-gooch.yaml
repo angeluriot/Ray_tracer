@@ -1,0 +1,104 @@
+Settings:
+  resolution: [800,800]
+  mode: default # default / normals / z-buffer
+  near: 550
+  far: 920
+  shadows: true
+  recursions: 2
+  antialiasing: 2
+  gooch: true
+
+Camera:
+  position: [200,200,1000]
+  direction: [0,0,-1]
+  up: [0,1,0]
+
+Lights:
+- position: [-1000,600,400]
+  color: [1.0,1.0,1.0]
+
+Objects:
+- type: sphere
+  position: [90,320,100]
+  radius: 50
+  north: [0,1,0]
+  start: [0,0,1]
+  texture: none
+  material: # blue
+    color: [0.0,0.0,1.0]
+    ambient: 0.2
+    diffuse: 0.7
+    specular: 0.5
+    shininess: 64
+    refractive_index: 0.0
+- type: sphere
+  position: [210,270,300]
+  radius: 50
+  north: [0,1,0]
+  start: [0,0,1]
+  texture: none
+  material: # green
+    color: [0.0,1.0,0.0]
+    ambient: 0.2
+    diffuse: 0.3
+    specular: 0.5
+    shininess: 8
+    refractive_index: 0.0
+- type: sphere
+  position: [290,170,150]
+  radius: 50
+  north: [0,1,0]
+  start: [0,0,1]
+  texture: none
+  material: # red
+    color: [1.0,0.0,0.0]
+    ambient: 0.2
+    diffuse: 0.7
+    specular: 0.8
+    shininess: 32
+    refractive_index: 0.0
+- type: sphere
+  position: [140,220,400]
+  radius: 50
+  north: [0,1,0]
+  start: [0,0,1]
+  texture: none
+  material: # yellow
+    color: [1.0,0.8,0.0]
+    ambient: 0.2
+    diffuse: 0.8
+    specular: 0.0
+    shininess: 1
+    refractive_index: 0.0
+- type: sphere
+  position: [110,130,200]
+  radius: 50
+  north: [0,1,0]
+  start: [0,0,1]
+  texture: none
+  material: # orange
+    color: [1.0,0.5,0.0]
+    ambient: 0.2
+    diffuse: 0.8
+    specular: 0.5
+    shininess: 32
+    refractive_index: 0.0
+- type: sphere
+  position: [200,200,-1000]
+  radius: 1000
+  north: [0,1,0]
+  start: [0,0,1]
+  texture: none
+  material: # gray
+    color: [0.4,0.4,0.4]
+    ambient: 0.2
+    diffuse: 0.8
+    specular: 0.0
+    shininess: 1
+    refractive_index: 0.0
+
+Gooch:
+  b: 0.55
+  y: 0.3
+  alpha: 0.25
+  beta: 0.5

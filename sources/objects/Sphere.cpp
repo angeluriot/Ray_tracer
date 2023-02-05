@@ -3,10 +3,12 @@
 
 constexpr float PI = 3.141592653589793f;
 
-Sphere::Sphere(const Point& position, float radius)
+Sphere::Sphere(const Point& position, float radius, const Vector& north, const Vector& start)
 {
 	this->position = position;
 	this->radius = radius;
+	this->north = north;
+	this->start = start;
 	texture = nullptr;
 }
 
@@ -48,13 +50,7 @@ Hit Sphere::intersect(const Ray& ray) const
 	if (!texture)
 		return Hit(distance, normal, material.color);
 
-	Vector north = Vector(0.f, 1.f, 0.f);
-	Vector start = Vector(0.f, 0.f, 1.f);
-
-	// Normal is a point that we project onto the plane defined by the north vector
-	Vector equator_point = normal - north * normal.dot(north);
-
-	float u = 0.5f + atan(equator_point.dot(start)) / (2.f * PI);
+	float u = 0.5f + atan2(normal.x, normal.z) / (2.f * PI);
 	float v = acos(normal.dot(north)) / PI;
 	Color color = texture->colorAt(u, v);
 
