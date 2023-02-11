@@ -91,48 +91,83 @@ Color Scene::trace(const Ray& ray, int depth)
 		// For all lights in the scene
 		for (int i = 0; i < lights.size(); i++)
 		{
+			float is_shadowed = 0.f;
+
 			// The vector from the hit point to the light source
 			Vector light_vector = lights[i].position - hit;
 			Vector light_dir = light_vector.normalized();
 
 			// Compute shadows
-			Ray reverse_ray(hit, light_dir);
-
-			bool is_shadowed = false;
-
 			if (shadows_on)
 			{
-				double hit_distance = light_vector.length();
+				if (soft_shadows == 0)
+				{
+					Ray reverse_ray(hit, light_dir);
+						double hit_distance = light_vector.length();
 
-				// For all objects in the scene
-				for (int j = 0; j < objects.size(); j++)
-					if (!(j == obj_index))
+						// For all objects in the scene
+						for (int k = 0; k < objects.size(); k++)
+							if (!(k == obj_index))
+							{
+								Hit reverse_hit(objects[k]->intersect(reverse_ray));
+
+								if (!reverse_hit.no_hit && reverse_hit.distance < hit_distance && reverse_hit.distance > 0.001f)
+								{
+									is_shadowed = 1.f;
+									break;
+								}
+							}
+				}
+
+				else
+					for (int i = -soft_shadows; i < soft_shadows; i++)
 					{
-						Hit reverse_hit(objects[j]->intersect(reverse_ray));
-
-						if (!reverse_hit.no_hit && reverse_hit.distance < hit_distance && reverse_hit.distance > 0.001f)
+						for (int j = -soft_shadows; j < soft_shadows; j++)
 						{
-							is_shadowed = true;
-							break;
+							Ray reverse_ray(hit, Vector(light_dir.x + i * 0.002f + j * 0.002f, light_dir.y + i * 0.002f + j * 0.002f, light_dir.z + i * 0.002f + j * 0.002f));
+							double hit_distance = light_vector.length();
+
+							// For all objects in the scene
+							for (int k = 0; k < objects.size(); k++)
+								if (!(k == obj_index))
+								{
+									Hit reverse_hit(objects[k]->intersect(reverse_ray));
+
+									if (!reverse_hit.no_hit && reverse_hit.distance < hit_distance && reverse_hit.distance > 0.001f)
+									{
+										is_shadowed++;
+										break;
+									}
+								}
 						}
 					}
 			}
 
 			if (!gooch)
 			{
+				is_shadowed /= (float)((1 + 2 * soft_shadows) * (1 + 2 * soft_shadows));
+				float enlightenment = 1.f - is_shadowed;
+
 				// Add ambient light
 				color += min_hit.color * material.ambient * lights[i].color;
 
+				// Add diffuse light
+				color += min_hit.color * enlightenment * material.diffuse * lights[i].color * std::max(0.f, normal.dot(light_dir));
+				// The direction of the reflected ray
+				Vector reflect = 2.f * (normal.dot(light_dir)) * normal - light_dir;
+				// Add specular light
+				color += material.specular * enlightenment * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
+
 				// If not shadowed
-				if (!is_shadowed)
-				{
+				//if (!is_shadowed)
+				//{
 					// Add diffuse light
-					color += min_hit.color * material.diffuse * lights[i].color * std::max(0.f, normal.dot(light_dir));
+					//color += min_hit.color * material.diffuse * lights[i].color * std::max(0.f, normal.dot(light_dir));
 					// The direction of the reflected ray
-					Vector reflect = 2.f * (normal.dot(light_dir)) * normal - light_dir;
+					//Vector reflect = 2.f * (normal.dot(light_dir)) * normal - light_dir;
 					// Add specular light
-					color += material.specular * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
-				}
+					//color += material.specular * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
+				//}
 			}
 
 			else

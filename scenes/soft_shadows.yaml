@@ -4,9 +4,9 @@ Settings:
   near: 550
   far: 920
   shadows: true
-  soft_shadows: 0
-  recursions: 5
-  antialiasing: 2
+  soft_shadows: 3
+  recursions: 10
+  antialiasing: 1
   gooch: false
 
 Camera:
@@ -63,16 +63,16 @@ Objects:
 - type: sphere
   position: [140,220,400]
   radius: 50
-  north: [0,0.8,1]
-  start: [-1,0,1]
-  texture: textures/earth.png
+  north: [0,1,0]
+  start: [0,0,1]
+  texture: none
   material: # yellow
     color: [1.0,0.8,0.0]
     ambient: 0.2
     diffuse: 0.8
-    specular: 0.0
-    shininess: 1
-    refractive_index: 0.0
+    specular: 0.5
+    shininess: 32
+    refractive_index: 1.5
 - type: sphere
   position: [110,130,200]
   radius: 50
@@ -86,31 +86,40 @@ Objects:
     specular: 0.5
     shininess: 32
     refractive_index: 0.0
-- type: sphere
-  position: [200,200,-1000]
-  radius: 1000
-  north: [0,1,0]
-  start: [0,0,1]
+- type: triangle
+  point_1: [200,150,430]
+  point_2: [180,130,500]
+  point_3: [205,115,490]
+  texture: none
+  material: # cyan
+    color: [0.0,1.0,1.0]
+    ambient: 0.2
+    diffuse: 0.8
+    specular: 0.5
+    shininess: 32
+    refractive_index: 0.0
+- type: plane
+  position: [0,0,0]
+  normal: [0,0.3,0.7]
   texture: none
   material: # gray
     color: [0.4,0.4,0.4]
     ambient: 0.2
     diffuse: 0.8
     specular: 0.0
-    shininess: 1
+    shininess: 32
     refractive_index: 0.0
-- type: obj
-  file: models/dolphins.obj
+- type: cube
   position: [200,200,500]
-  size: 70
-  pitch: 0.0
-  yaw: 0.0
-  roll: 0.0
+  size: 40
+  pitch: 0.5
+  yaw: 0.35
+  roll: 0.2
   texture: none
-  material: # cyan
-    color: [0.0,1.0,1.0]
+  material: # white
+    color: [1.0,1.0,1.0]
     ambient: 0.2
-    diffuse: 0.7
+    diffuse: 0.8
     specular: 0.5
-    shininess: 64
-    refractive_index: 1.5
+    shininess: 32
+    refractive_index: 0.0

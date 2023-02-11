@@ -4,8 +4,8 @@ int main(int argc, char* argv[])
 {
 	std::cout << "Introduction to Computer Graphics - Raytracer" << std::endl << std::endl;
 
-	char* default_input = "scenes/coolest.yaml";
-	char* default_output = "output/coolest.png";
+	char* default_input = "scenes/soft_shadows.yaml";
+	char* default_output = "output/soft_shadows.png";
 	char* input_file;
 
 	if ((argc < 2 || argc > 3) && default_input == "")

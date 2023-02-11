@@ -46,6 +46,7 @@ void Raytracer::parse_settings(const YAML::Node& node)
 	node["near"] >> scene.near;
 	node["far"] >> scene.far;
 	node["shadows"] >> scene.shadows_on;
+	node["soft_shadows"] >> scene.soft_shadows;
 	node["recursions"] >> scene.recursions;
 	node["antialiasing"] >> scene.antialiasing;
 	node["gooch"] >> scene.gooch;

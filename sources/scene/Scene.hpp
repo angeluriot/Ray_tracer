@@ -33,6 +33,7 @@ public:
 	float near;
 	float far;
 	bool shadows_on;
+	int soft_shadows;
 	int recursions;
 	int antialiasing;
 	bool gooch;
