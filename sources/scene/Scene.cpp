@@ -124,7 +124,7 @@ Color Scene::trace(const Ray& ray, int depth)
 					{
 						for (int j = -soft_shadows; j < soft_shadows; j++)
 						{
-							Ray reverse_ray(hit, Vector(light_dir.x + i * 0.002f + j * 0.002f, light_dir.y + i * 0.002f + j * 0.002f, light_dir.z + i * 0.002f + j * 0.002f));
+							Ray reverse_ray(hit, Vector(light_dir.x + i * 0.005f + j * 0.005f, light_dir.y + i * 0.005f + j * 0.005f, light_dir.z + i * 0.005f + j * 0.005f));
 							double hit_distance = light_vector.length();
 
 							// For all objects in the scene
