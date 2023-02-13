@@ -1,5 +1,5 @@
 Settings:
-  resolution: [1080,1080]
+  resolution: [1920,1080]
   mode: default # default / normals / z-buffer
   near: 550
   far: 920
@@ -9,7 +9,7 @@ Settings:
   gooch: false
 
 Camera:
-  position: [200,200,1000]
+  position: [200,200,1200]
   direction: [0,0,-1]
   up: [0,1,0]
 
@@ -29,6 +29,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # blue
     color: [0.0,0.0,1.0]
     ambient: 0.0
@@ -43,6 +44,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # green
     color: [0.0,1.0,0.0]
     ambient: 0.0
@@ -57,6 +59,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # red
     color: [1.0,0.0,0.0]
     ambient: 0.0
@@ -71,6 +74,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # yellow
     color: [1.0,0.8,0.0]
     ambient: 0.0
@@ -85,6 +89,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # orange
     color: [1.0,0.5,0.0]
     ambient: 0.0
@@ -99,6 +104,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # Cyan
     color: [0.0,1.0,1.0]
     ambient: 0.0
@@ -113,6 +119,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # Purple
     color: [1.0,0.0,1.0]
     ambient: 0.0
@@ -127,6 +134,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # Yellow
     color: [1.0,1.0,0.0]
     ambient: 0.0
@@ -141,6 +149,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # Yellow
     color: [1.0,1.0,0.0]
     ambient: 0.0
@@ -155,6 +164,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # blue
     color: [0.0,0.0,1.0]
     ambient: 0.0
@@ -169,6 +179,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # green
     color: [0.0,1.0,0.0]
     ambient: 0.0
@@ -183,6 +194,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # red
     color: [1.0,0.0,0.0]
     ambient: 0.0
@@ -197,6 +209,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # yellow
     color: [1.0,0.8,0.0]
     ambient: 0.0
@@ -211,6 +224,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # orange
     color: [1.0,0.5,0.0]
     ambient: 0.0
@@ -225,6 +239,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # Cyan
     color: [0.0,1.0,1.0]
     ambient: 0.0
@@ -239,6 +254,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # Purple
     color: [1.0,0.0,1.0]
     ambient: 0.0
@@ -253,6 +269,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # Yellow
     color: [1.0,1.0,0.0]
     ambient: 0.0
@@ -267,6 +284,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # Yellow
     color: [1.0,1.0,0.0]
     ambient: 0.0
@@ -279,6 +297,7 @@ Objects:
   normal: [0,0.3,0.7]
   texture: none
   normals: none
+  specular: none
   material: # gray
     color: [0.4,0.4,0.4]
     ambient: 0.2

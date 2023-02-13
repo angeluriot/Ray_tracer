@@ -47,7 +47,7 @@ Hit Sphere::intersect(const Ray& ray) const
 	// The normal at the first intersection point
 	Vector normal = (intersection - position).normalized();
 
-	if (!texture && !normals)
+	if (!texture && !normals && !specular)
 		return Hit(distance, normal, material.color);
 
 	// Project the normal onto the plane defined by the north vector
@@ -61,11 +61,22 @@ Hit Sphere::intersect(const Ray& ray) const
 	float v = acos(normal.dot(north)) / PI;
 
 	Color color = texture ? texture->colorAt(u, v) : material.color;
+	float specular_strength = specular ? specular->colorAt(u, v).r : 1.f;
 
 	if (!normals)
-		return Hit(distance, normal, color);
+		return Hit(distance, normal, color, specular_strength);
 
-	Vector normal_change = (normals->colorAt(u, v) * 2.f) - 1.f;
+	float normal_theta = acos(normal.z);
+	float normal_phi = (normal.y < 0.f ? -1.f : 1.f) * acos(normal.x / (sqrt(normal.x * normal.x + normal.y * normal.y) + 0.00001f));
 
-	return Hit(distance, normal, color);
+	Vector change = ((normals->colorAt(u, v) * 2.f) - 1.f).normalized();
+	float change_theta = acos(change.z);
+	float change_phi = (change.y < 0.f ? -1.f : 1.f) * acos(change.x / (sqrt(change.x * change.x + change.y * change.y) + 0.00001f));
+
+	normal_theta += change_theta * 0.3f;
+	normal_phi += change_phi * 0.3f;
+
+	normal = Vector(sin(normal_theta) * cos(normal_phi), sin(normal_theta) * sin(normal_phi), cos(normal_theta)).normalized();
+
+	return Hit(distance, normal, color, specular_strength);
 }

@@ -159,6 +159,13 @@ Object* Raytracer::parse_object(const YAML::Node& node)
 		if (normals_path != "none")
 			returnObject->normals = new Image(normals_path.data());
 
+		// Specular
+		std::string specular_path;
+		node["specular"] >> specular_path;
+
+		if (specular_path != "none")
+			returnObject->specular = new Image(specular_path.data());
+
 		// Read the material and attach to object
 		returnObject->material = parse_material(node["material"]);
 	}
