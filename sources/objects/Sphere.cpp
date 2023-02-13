@@ -47,7 +47,7 @@ Hit Sphere::intersect(const Ray& ray) const
 	// The normal at the first intersection point
 	Vector normal = (intersection - position).normalized();
 
-	if (!texture)
+	if (!texture && !normals)
 		return Hit(distance, normal, material.color);
 
 	// Project the normal onto the plane defined by the north vector
@@ -60,7 +60,12 @@ Hit Sphere::intersect(const Ray& ray) const
 	float u = 1.f - (0.5f + atan2(projected_2d_x, projected_2d_y) / (2.f * PI));
 	float v = acos(normal.dot(north)) / PI;
 
-	Color color = texture->colorAt(u, v);
+	Color color = texture ? texture->colorAt(u, v) : material.color;
+
+	if (!normals)
+		return Hit(distance, normal, color);
+
+	Vector normal_change = (normals->colorAt(u, v) * 2.f) - 1.f;
 
 	return Hit(distance, normal, color);
 }

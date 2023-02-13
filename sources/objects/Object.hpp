@@ -12,6 +12,7 @@ public:
 
 	Material material;
 	Image* texture;
+	Image* normals;
 
 	virtual Hit intersect(const Ray& ray) const = 0;
 };
