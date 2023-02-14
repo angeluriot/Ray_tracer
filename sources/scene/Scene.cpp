@@ -124,7 +124,15 @@ Color Scene::trace(const Ray& ray, int depth)
 					{
 						for (int j = -soft_shadows; j < soft_shadows; j++)
 						{
-							Ray reverse_ray(hit, Vector(light_dir.x + i * 0.005f + j * 0.005f, light_dir.y + i * 0.005f + j * 0.005f, light_dir.z + i * 0.005f + j * 0.005f));
+							float theta = acos(light_dir.z);
+							float phi = (light_dir.y < 0.f ? -1.f : 1.f) * acos(light_dir.x / (sqrt(light_dir.x * light_dir.x + light_dir.y * light_dir.y) + 0.00001f));
+
+							theta += i * 0.003f;
+							phi += j * 0.003f;
+
+							Vector new_dir = Vector(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta)).normalized();
+
+							Ray reverse_ray(hit, new_dir);
 							double hit_distance = light_vector.length();
 
 							// For all objects in the scene
@@ -216,6 +224,9 @@ void Scene::render(Image& image)
 
 	// Loop over all pixels
 	for (int y = 0; y < image.height(); y++)
+	{
+		std::cout << y << std::endl;
+
 		for (int x = 0; x < image.width(); x++)
 		{
 			std::vector<Color> colors;
@@ -239,6 +250,7 @@ void Scene::render(Image& image)
 
 			image(x, y) = color;
 		}
+	}
 }
 
 void Scene::add_object(Object* object)

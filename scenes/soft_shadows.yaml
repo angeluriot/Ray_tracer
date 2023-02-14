@@ -4,9 +4,9 @@ Settings:
   near: 550
   far: 920
   shadows: true
-  soft_shadows: 4
-  recursions: 10
-  antialiasing: 4
+  soft_shadows: 0
+  recursions: 7
+  antialiasing: 2
   gooch: false
 
 Camera:
