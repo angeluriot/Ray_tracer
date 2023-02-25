@@ -103,20 +103,20 @@ Color Scene::trace(const Ray& ray, int depth)
 				if (soft_shadows == 0)
 				{
 					Ray reverse_ray(hit, light_dir);
-						double hit_distance = light_vector.length();
+					double hit_distance = light_vector.length();
 
-						// For all objects in the scene
-						for (int k = 0; k < objects.size(); k++)
-							if (!(k == obj_index))
+					// For all objects in the scene
+					for (int k = 0; k < objects.size(); k++)
+						if (!(k == obj_index))
+						{
+							Hit reverse_hit(objects[k]->intersect(reverse_ray));
+
+							if (!reverse_hit.no_hit && reverse_hit.distance < hit_distance && reverse_hit.distance > 0.001f)
 							{
-								Hit reverse_hit(objects[k]->intersect(reverse_ray));
-
-								if (!reverse_hit.no_hit && reverse_hit.distance < hit_distance && reverse_hit.distance > 0.001f)
-								{
-									is_shadowed = 1.f;
-									break;
-								}
+								is_shadowed = 1.f;
+								break;
 							}
+						}
 				}
 
 				else
@@ -225,7 +225,7 @@ void Scene::render(Image& image)
 	// Loop over all pixels
 	for (int y = 0; y < image.height(); y++)
 	{
-		std::cout << y << std::endl;
+		std::cout << image.height() - y << std::endl;
 
 		for (int x = 0; x < image.width(); x++)
 		{

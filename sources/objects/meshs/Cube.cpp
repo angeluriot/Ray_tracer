@@ -26,5 +26,7 @@ Cube::Cube(const Point& position, float size, float pitch, float yaw, float roll
 
 	init(position, size, pitch, yaw, roll);
 
+	box = nullptr;
+
 	texture = nullptr;
 }

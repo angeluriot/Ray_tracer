@@ -3,10 +3,10 @@ Settings:
   mode: default # default / normals / z-buffer
   near: 550
   far: 920
-  shadows: true
+  shadows: false
   soft_shadows: 0
-  recursions: 5
-  antialiasing: 2
+  recursions: 2
+  antialiasing: 1
   gooch: false
 
 Camera:
