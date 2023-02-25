@@ -4,7 +4,7 @@ Settings:
   near: 550
   far: 920
   shadows: true
-  soft_shadows: 0
+  soft_shadows: 3
   recursions: 7
   antialiasing: 2
   gooch: false
@@ -27,6 +27,8 @@ Objects:
   north: [0,1,0]
   start: [0,0,1]
   texture: none
+  normals: none
+  specular: none
   material: # blue
     color: [0.0,0.0,1.0]
     ambient: 0.2
@@ -40,6 +42,8 @@ Objects:
   north: [0,1,0]
   start: [0,0,1]
   texture: none
+  normals: none
+  specular: none
   material: # green
     color: [0.0,1.0,0.0]
     ambient: 0.2
@@ -53,6 +57,8 @@ Objects:
   north: [0,1,0]
   start: [0,0,1]
   texture: none
+  normals: none
+  specular: none
   material: # red
     color: [1.0,0.0,0.0]
     ambient: 0.2
@@ -66,6 +72,8 @@ Objects:
   north: [0,1,0]
   start: [0,0,1]
   texture: none
+  normals: none
+  specular: none
   material: # yellow
     color: [1.0,0.8,0.0]
     ambient: 0.2
@@ -79,6 +87,8 @@ Objects:
   north: [0,1,0]
   start: [0,0,1]
   texture: none
+  normals: none
+  specular: none
   material: # orange
     color: [1.0,0.5,0.0]
     ambient: 0.2
@@ -91,6 +101,8 @@ Objects:
   point_2: [180,130,500]
   point_3: [205,115,490]
   texture: none
+  normals: none
+  specular: none
   material: # cyan
     color: [0.0,1.0,1.0]
     ambient: 0.2
@@ -102,6 +114,8 @@ Objects:
   position: [0,0,0]
   normal: [0,0.3,0.7]
   texture: none
+  normals: none
+  specular: none
   material: # gray
     color: [0.4,0.4,0.4]
     ambient: 0.2
@@ -116,6 +130,8 @@ Objects:
   yaw: 0.35
   roll: 0.2
   texture: none
+  normals: none
+  specular: none
   material: # white
     color: [1.0,1.0,1.0]
     ambient: 0.2

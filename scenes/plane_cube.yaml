@@ -5,6 +5,7 @@ Settings:
   far: 920
   shadows: true
   soft_shadows: 0
+  soft_shadows: 0
   recursions: 10
   antialiasing: 2
   gooch: false
@@ -28,6 +29,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # blue
     color: [0.0,0.0,1.0]
     ambient: 0.2
@@ -42,6 +44,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # green
     color: [0.0,1.0,0.0]
     ambient: 0.2
@@ -56,6 +59,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: textures/moon-normals.png
+  specular: none
   material: # gray
     color: [0.3,0.3,0.3]
     ambient: 0.2
@@ -70,6 +74,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # yellow
     color: [1.0,0.8,0.0]
     ambient: 0.2
@@ -84,6 +89,7 @@ Objects:
   start: [0,0,1]
   texture: none
   normals: none
+  specular: none
   material: # orange
     color: [1.0,0.5,0.0]
     ambient: 0.2
@@ -97,6 +103,7 @@ Objects:
   point_3: [205,115,490]
   texture: none
   normals: none
+  specular: none
   material: # cyan
     color: [0.0,1.0,1.0]
     ambient: 0.2
@@ -109,6 +116,7 @@ Objects:
   normal: [0,0.3,0.7]
   texture: none
   normals: none
+  specular: none
   material: # gray
     color: [0.4,0.4,0.4]
     ambient: 0.2
@@ -124,6 +132,7 @@ Objects:
   roll: 0.2
   texture: none
   normals: none
+  specular: none
   material: # white
     color: [1.0,1.0,1.0]
     ambient: 0.2

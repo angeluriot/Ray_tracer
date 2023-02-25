@@ -4,6 +4,7 @@ Settings:
   near: 550
   far: 920
   shadows: true
+  soft_shadows: 0
   recursions: 10
   antialiasing: 2
   gooch: false
@@ -25,7 +26,7 @@ Objects:
   start: [-0.5,0,-0.1]
   texture: textures/earth.png
   normals: textures/earth-normals.png
-  specular: none
+  specular: textures/earth-specular.png
   material: # gray
     color: [0.3,0.3,0.3]
     ambient: 0.05

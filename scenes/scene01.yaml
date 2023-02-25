@@ -4,6 +4,7 @@ Settings:
   near: 550
   far: 920
   shadows: true
+  soft_shadows: 0
   recursions: 5
   antialiasing: 16
   gooch: false

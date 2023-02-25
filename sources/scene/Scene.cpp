@@ -51,6 +51,7 @@ Color Scene::trace(const Ray& ray, int depth)
 	Vector view_dir = -ray.direction;			// The view vector
 	float specular_strength = min_hit.specular;	// The specular strength
 
+
 	Color color = Color(0.f, 0.f, 0.f);
 
 	if (mode == Mode::Normals)
@@ -165,7 +166,7 @@ Color Scene::trace(const Ray& ray, int depth)
 				// The direction of the reflected ray
 				Vector reflect = 2.f * (normal.dot(light_dir)) * normal - light_dir;
 				// Add specular light
-				color += material.specular * enlightenment * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
+				color += material.specular * specular_strength * enlightenment * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
 
 				// If not shadowed
 				//if (!is_shadowed)
