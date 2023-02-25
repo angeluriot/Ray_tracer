@@ -1,5 +1,5 @@
 Settings:
-  resolution: [800,800]
+  resolution: [1000,1000]
   mode: default # default / normals / z-buffer
   near: 550
   far: 920
@@ -27,6 +27,7 @@ Objects:
   north: [0,1,0]
   start: [0,0,1]
   texture: none
+  normals: none
   material: # blue
     color: [0.0,0.0,1.0]
     ambient: 0.2
@@ -40,6 +41,7 @@ Objects:
   north: [0,1,0]
   start: [0,0,1]
   texture: none
+  normals: none
   material: # green
     color: [0.0,1.0,0.0]
     ambient: 0.2
@@ -49,16 +51,17 @@ Objects:
     refractive_index: 0.0
 - type: sphere
   position: [290,170,150]
-  radius: 50
+  radius: 100
   north: [0,1,0]
   start: [0,0,1]
   texture: none
-  material: # red
-    color: [1.0,0.0,0.0]
+  normals: textures/moon-normals.png
+  material: # gray
+    color: [0.3,0.3,0.3]
     ambient: 0.2
-    diffuse: 0.7
-    specular: 0.8
-    shininess: 32
+    diffuse: 0.8
+    specular: 0.5
+    shininess: 16
     refractive_index: 0.0
 - type: sphere
   position: [140,220,400]
@@ -66,6 +69,7 @@ Objects:
   north: [0,1,0]
   start: [0,0,1]
   texture: none
+  normals: none
   material: # yellow
     color: [1.0,0.8,0.0]
     ambient: 0.2
@@ -79,6 +83,7 @@ Objects:
   north: [0,1,0]
   start: [0,0,1]
   texture: none
+  normals: none
   material: # orange
     color: [1.0,0.5,0.0]
     ambient: 0.2
@@ -91,6 +96,7 @@ Objects:
   point_2: [180,130,500]
   point_3: [205,115,490]
   texture: none
+  normals: none
   material: # cyan
     color: [0.0,1.0,1.0]
     ambient: 0.2
@@ -102,6 +108,7 @@ Objects:
   position: [0,0,0]
   normal: [0,0.3,0.7]
   texture: none
+  normals: none
   material: # gray
     color: [0.4,0.4,0.4]
     ambient: 0.2
@@ -116,6 +123,7 @@ Objects:
   yaw: 0.35
   roll: 0.2
   texture: none
+  normals: none
   material: # white
     color: [1.0,1.0,1.0]
     ambient: 0.2

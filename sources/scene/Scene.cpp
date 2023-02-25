@@ -45,10 +45,11 @@ Color Scene::trace(const Ray& ray, int depth)
 	if (!obj)
 		return Color(0.f, 0.f, 0.f);
 
-	Material material = obj->material;		// The hit objects material
-	Point hit = ray.at(min_hit.distance);	// The hit point
-	Vector normal = min_hit.normal;			// The normal at hit point
-	Vector view_dir = -ray.direction;		// The view vector
+	Material material = obj->material;			// The hit objects material
+	Point hit = ray.at(min_hit.distance);		// The hit point
+	Vector normal = min_hit.normal;				// The normal at hit point
+	Vector view_dir = -ray.direction;			// The view vector
+	float specular_strength = min_hit.specular;	// The specular strength
 
 	Color color = Color(0.f, 0.f, 0.f);
 
@@ -78,7 +79,7 @@ Color Scene::trace(const Ray& ray, int depth)
 				{
 					Vector light_dir = (lights[i].position - hit).normalized();
 					Vector reflect = 2.f * (normal.dot(light_dir)) * normal - light_dir;
-					color += material.specular * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
+					color += material.specular * specular_strength * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
 				}
 			}
 
@@ -174,7 +175,7 @@ Color Scene::trace(const Ray& ray, int depth)
 					// The direction of the reflected ray
 					//Vector reflect = 2.f * (normal.dot(light_dir)) * normal - light_dir;
 					// Add specular light
-					//color += material.specular * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
+					//color += material.specular * specular_strength * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
 				//}
 			}
 
@@ -191,7 +192,7 @@ Color Scene::trace(const Ray& ray, int depth)
 				// The direction of the reflected ray
 				Vector reflect = 2.f * (normal.dot(light_dir)) * normal - light_dir;
 				// Add specular light
-				color += material.specular * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
+				color += material.specular * specular_strength * lights[i].color * pow(std::max(0.f, reflect.dot(view_dir)), material.shininess);
 			}
 		}
 
@@ -203,7 +204,7 @@ Color Scene::trace(const Ray& ray, int depth)
 				Vector reflect = 2.f * (normal.dot(view_dir)) * normal - view_dir;
 				Ray reflected_ray(hit, reflect);
 				Color reflected_color = trace(reflected_ray, depth + 1);
-				color += material.specular * reflected_color;
+				color += material.specular * specular_strength * reflected_color;
 			}
 		}
 	}

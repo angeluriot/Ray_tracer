@@ -27,6 +27,7 @@ Objects:
   north: [0,1,0]
   start: [0,0,1]
   texture: none
+  normals: none
   material: # blue
     color: [0.0,0.0,1.0]
     ambient: 0.2
@@ -40,6 +41,7 @@ Objects:
   north: [0,1,0]
   start: [0,0,1]
   texture: none
+  normals: none
   material: # green
     color: [0.0,1.0,0.0]
     ambient: 0.2
@@ -53,6 +55,7 @@ Objects:
   north: [0,1,0]
   start: [0,0,1]
   texture: none
+  normals: none
   material: # red
     color: [1.0,0.0,0.0]
     ambient: 0.2
@@ -66,6 +69,7 @@ Objects:
   north: [0,0.8,1]
   start: [-1,0,1]
   texture: textures/earth.png
+  normals: none
   material: # yellow
     color: [1.0,0.8,0.0]
     ambient: 0.2
@@ -79,6 +83,7 @@ Objects:
   north: [0,1,0]
   start: [0,0,1]
   texture: none
+  normals: none
   material: # orange
     color: [1.0,0.5,0.0]
     ambient: 0.2
@@ -92,6 +97,7 @@ Objects:
   north: [0,1,0]
   start: [0,0,1]
   texture: none
+  normals: none
   material: # gray
     color: [0.4,0.4,0.4]
     ambient: 0.2
@@ -107,6 +113,7 @@ Objects:
   yaw: 0.0
   roll: 0.0
   texture: none
+  normals: none
   material: # cyan
     color: [0.0,1.0,1.0]
     ambient: 0.2
