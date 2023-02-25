@@ -31,6 +31,8 @@ Mesh::Mesh(const std::string& filename, const Point& position, float size, float
 
 	init(position, size, pitch, yaw, roll);
 	texture = nullptr;
+	normals = nullptr;
+	specular = nullptr;
 }
 
 void Mesh::init(const Point& position, float size, float pitch, float yaw, float roll)

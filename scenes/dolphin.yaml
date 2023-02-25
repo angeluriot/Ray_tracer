@@ -1,6 +1,7 @@
 Settings:
   resolution: [800,800]
   mode: default # default / normals / z-buffer
+  threads: 32
   near: 550
   far: 920
   shadows: true

@@ -30,6 +30,7 @@ public:
 	std::array<int, 2> resolution;
 	Mode mode;
 	Camera camera;
+	int nb_threads;
 	float near;
 	float far;
 	bool shadows_on;

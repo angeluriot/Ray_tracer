@@ -6,6 +6,8 @@ Triangle::Triangle(const Point& point_1, const Point& point_2, const Point& poin
 	this->point_2 = point_2;
 	this->point_3 = point_3;
 	texture = nullptr;
+	normals = nullptr;
+	specular = nullptr;
 }
 
 Hit Triangle::intersect(const Ray& ray) const

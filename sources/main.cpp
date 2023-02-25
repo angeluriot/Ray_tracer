@@ -1,11 +1,13 @@
 #include "Raytracer.hpp"
+#include <chrono>
+#include <ctime>
 
 int main(int argc, char* argv[])
 {
 	std::cout << "Introduction to Computer Graphics - Raytracer" << std::endl << std::endl;
 
-	char* default_input = "scenes/soft_shadows.yaml";
-	char* default_output = "output/soft_shadows.png";
+	char* default_input = "scenes/final.yaml";
+	char* default_output = "output/final.png";
 	char* input_file;
 
 	if ((argc < 2 || argc > 3) && default_input == "")
@@ -42,7 +44,13 @@ int main(int argc, char* argv[])
 		ofname += ".png";
 	}
 
+	auto start = std::chrono::system_clock::now();
+
 	raytracer.render_to_file(ofname);
+
+	auto end = std::chrono::system_clock::now();
+	std::chrono::duration<float> elapsed_seconds = end - start;
+	std::cout << "Computation time: " << elapsed_seconds.count() << "s" << std::endl;
 
 	return EXIT_SUCCESS;
 }

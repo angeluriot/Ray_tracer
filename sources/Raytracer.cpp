@@ -39,6 +39,8 @@ void Raytracer::parse_settings(const YAML::Node& node)
 	node["resolution"][0] >> scene.resolution[0];
 	node["resolution"][1] >> scene.resolution[1];
 
+	node["threads"] >> scene.nb_threads;
+
 	std::string mode;
 	node["mode"] >> mode;
 	scene.set_mode(mode);

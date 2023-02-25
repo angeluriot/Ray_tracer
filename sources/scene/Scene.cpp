@@ -2,6 +2,7 @@
 #include "light/Hit.hpp"
 #include "scene/Scene.hpp"
 #include "utils/Material.hpp"
+#include <thread>
 
 Ray get_refracted_ray(Point hit, Ray ray, Vector normal, float n_1, float n_2)
 {
@@ -223,36 +224,48 @@ void Scene::render(Image& image)
 	Vector up = camera.up;
 	Vector right = camera.direction.cross(camera.up);
 	float fov = 0.4f;
+	std::vector<std::thread> threads;
 
-	// Loop over all pixels
-	for (int y = 0; y < image.height(); y++)
+	auto f = [&](int y_min, int y_max)
 	{
-		std::cout << y << std::endl;
+		// Loop over all pixels
+		for (int y = y_min; y < y_max; y++)
+			for (int x = 0; x < image.width(); x++)
+			{
+				std::vector<Color> colors;
 
-		for (int x = 0; x < image.width(); x++)
-		{
-			std::vector<Color> colors;
+				// Antialiasing
+				for (float i = 0.f; i < 1.f; i += 1.f / float(antialiasing))
+					for (float j = 0.f; j < 1.f; j += 1.f / float(antialiasing))
+					{
+						Point pixel = position + direction + right * ((float(x + i) - w / 2.f) / mean) * fov - up * ((float(y + j) - h / 2.f) / mean) * fov;
+						Ray ray(camera.position, (pixel - camera.position).normalized());
+						Color col = trace(ray);
+						col.clamp();
+						colors.push_back(col);
+					}
 
-			// Antialiasing
-			for (float i = 0.f; i < 1.f; i += 1.f / float(antialiasing))
-				for (float j = 0.f; j < 1.f; j += 1.f / float(antialiasing))
-				{
-					Point pixel = position + direction + right * ((float(x + i) - w / 2.f) / mean) * fov - up * ((float(y + j) - h / 2.f) / mean) * fov;
-					Ray ray(camera.position, (pixel - camera.position).normalized());
-					Color col = trace(ray);
-					col.clamp();
-					colors.push_back(col);
-				}
+				Color color(0.f, 0.f, 0.f);
 
-			Color color(0.f, 0.f, 0.f);
+				// Average colors
+				for (Color& col : colors)
+					color += col / float(colors.size());
 
-			// Average colors
-			for (Color& col : colors)
-				color += col / float(colors.size());
+				image(x, y) = color;
+			}
+	};
 
-			image(x, y) = color;
-		}
+	// Parallelization
+	for (int i = 0; i < nb_threads; i++)
+	{
+		int min_y = i * (image.height() / nb_threads + 1);
+		int max_y = (i + 1) * (image.height() / nb_threads + 1);
+
+		threads.push_back(std::thread(f, min_y, max_y > image.height() ? image.height() : max_y));
 	}
+
+	for (int i = 0; i < nb_threads; i++)
+		threads[i].join();
 }
 
 void Scene::add_object(Object* object)

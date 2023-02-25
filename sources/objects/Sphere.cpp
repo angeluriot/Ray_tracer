@@ -10,6 +10,8 @@ Sphere::Sphere(const Point& position, float radius, const Vector& north, const V
 	this->north = north.normalized();
 	this->start = start.normalized();
 	texture = nullptr;
+	normals = nullptr;
+	specular = nullptr;
 }
 
 Hit Sphere::intersect(const Ray& ray) const

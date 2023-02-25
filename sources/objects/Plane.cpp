@@ -5,6 +5,8 @@ Plane::Plane(const Point& position, const Vector& normal)
 	this->position = position;
 	this->normal = normal;
 	texture = nullptr;
+	normals = nullptr;
+	specular = nullptr;
 }
 
 Hit Plane::intersect(const Ray& ray) const
