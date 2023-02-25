@@ -5,7 +5,6 @@ Settings:
   far: 920
   shadows: true
   soft_shadows: 0
-  soft_shadows: 0
   recursions: 10
   antialiasing: 2
   gooch: false
