@@ -4,11 +4,14 @@
 #include <vector>
 #include "objects/Triangle.hpp"
 
+class Cube;
+
 class Mesh : public Object
 {
 public:
 
 	std::vector<Triangle> triangles;
+	Cube* box;
 
 	Mesh() = default;
 	Mesh(const std::string& filename, const Point& position, float size, float pitch, float yaw, float roll);

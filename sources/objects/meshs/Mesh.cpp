@@ -1,6 +1,7 @@
 #include "objects/meshs/Mesh.hpp"
 #include "objects/Triangle.hpp"
 #include "glm/glm.h"
+#include "objects/meshs/Cube.hpp"
 
 Mesh::Mesh(const std::string& filename, const Point& position, float size, float pitch, float yaw, float roll)
 {
@@ -30,6 +31,54 @@ Mesh::Mesh(const std::string& filename, const Point& position, float size, float
 	glmDelete(model);
 
 	init(position, size, pitch, yaw, roll);
+
+	Point box_corner_1 = Point(triangles[0].point_1.x, triangles[0].point_1.y, triangles[0].point_1.z);
+	Point box_corner_2 = Point(triangles[0].point_1.x, triangles[0].point_1.y, triangles[0].point_1.z);;
+
+	for (auto& triangle : triangles)
+	{
+		if (box_corner_1.x < triangle.point_1.x)
+			box_corner_1.x = triangle.point_1.x;
+		if (box_corner_1.y < triangle.point_1.y)
+			box_corner_1.y = triangle.point_1.y;
+		if (box_corner_1.z < triangle.point_1.z)
+			box_corner_1.z = triangle.point_1.z;
+		if (box_corner_1.x < triangle.point_2.x)
+			box_corner_1.x = triangle.point_2.x;
+		if (box_corner_1.y < triangle.point_2.y)
+			box_corner_1.y = triangle.point_2.y;
+		if (box_corner_1.z < triangle.point_2.z)
+			box_corner_1.z = triangle.point_2.z;
+		if (box_corner_1.x < triangle.point_3.x)
+			box_corner_1.x = triangle.point_3.x;
+		if (box_corner_1.y < triangle.point_3.y)
+			box_corner_1.y = triangle.point_3.y;
+		if (box_corner_1.z < triangle.point_3.z)
+			box_corner_1.z = triangle.point_3.z;
+
+		if (box_corner_2.x > triangle.point_1.x)
+			box_corner_2.x = triangle.point_1.x;
+		if (box_corner_2.y > triangle.point_1.y)
+			box_corner_2.y = triangle.point_1.y;
+		if (box_corner_2.z > triangle.point_1.z)
+			box_corner_2.z = triangle.point_1.z;
+		if (box_corner_2.x > triangle.point_2.x)
+			box_corner_2.x = triangle.point_2.x;
+		if (box_corner_2.y > triangle.point_2.y)
+			box_corner_2.y = triangle.point_2.y;
+		if (box_corner_2.z > triangle.point_2.z)
+			box_corner_2.z = triangle.point_2.z;
+		if (box_corner_2.x > triangle.point_3.x)
+			box_corner_2.x = triangle.point_3.x;
+		if (box_corner_2.y > triangle.point_3.y)
+			box_corner_2.y = triangle.point_3.y;
+		if (box_corner_2.z > triangle.point_3.z)
+			box_corner_2.z = triangle.point_3.z;
+	}
+
+	box = new Cube(Point((box_corner_1.x + box_corner_2.x) / 2, (box_corner_1.y + box_corner_2.y) / 2, (box_corner_1.z + box_corner_2.z) / 2),
+			   (float)sqrt(pow(box_corner_1.x - box_corner_2.x, 2) + pow(box_corner_1.y - box_corner_2.y, 2) + pow(box_corner_1.z - box_corner_2.z, 2)), 0.f, 0.f, 0.f);
+
 	texture = nullptr;
 	normals = nullptr;
 	specular = nullptr;
@@ -117,7 +166,10 @@ void Mesh::init(const Point& position, float size, float pitch, float yaw, float
 Hit Mesh::intersect(const Ray& ray) const
 {
 	// Check for intersection with each triangle
-	Hit min_hit(std::numeric_limits<float>::infinity(), Vector(), Color());
+	Hit min_hit(std::numeric_limits<float>::infinity(), Vector(), Color(), 1.f, true);
+
+	if (box != nullptr && box->intersect(ray).no_hit)
+		return Hit::NO_HIT();
 
 	for (auto& triangle : triangles)
 	{
