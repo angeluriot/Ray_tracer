@@ -7,7 +7,7 @@
 
 <br/>
 
-This project is a ray tracer made in C++ on the CPU.
+This project is a ray tracer made in C++ on the CPU that can render complex 3D scenes with custom models and textures, reflexions and refractions, shadows, and more.
 
 <br/>
 
