@@ -1,4 +1,4 @@
-# Ray tracer
+# 💡 Ray tracer
 
 ![Release](https://img.shields.io/badge/Release-v1.0-blueviolet)
 ![Language](https://img.shields.io/badge/Language-C%2B%2B-0052cf)
@@ -17,18 +17,18 @@ This project is a ray tracer made in C++ on the CPU that can render complex 3D s
 
 <br/>
 
-# Summary
+# 📋 Summary
 
-* **[Summary](#summary)**
-* **[Features](#features)**
-* **[Install](#install)**
-* **[Releases](#releases)**
-* **[Tests](#tests)**
-* **[Credits](#credits)**
+* **[📋 Summary](#-summary)**
+* **[✨ Features](#-features)**
+* **[🛠️ Install](#%EF%B8%8F-install)**
+* **[🗓️ Releases](#%EF%B8%8F-releases)**
+* **[🧪 Tests](#-tests)**
+* **[🙏 Credits](#-credits)**
 
 <br/>
 
-# Features
+# ✨ Features
 
 * You can specify the scene you want to render in a YAML file
 
@@ -46,19 +46,19 @@ This project is a ray tracer made in C++ on the CPU that can render complex 3D s
 
 <br/>
 
-# Install
+# 🛠️ Install
 
 You can run the `buid_vs.bat` file to build the project with **Visual Studio**, or just use the CMake Tools extension on **VS Code**.
 
 <br/>
 
-# Releases
+# 🗓️ Releases
 
 If you just want to test the program without editing the source code, go see the [**Releases**](https://github.com/angeluriot/Ray_tracer/releases).
 
 <br/>
 
-# Tests
+# 🧪 Tests
 
 <p align="center">
 	<img src="resources/misc/dolphins.png" width="400">
@@ -74,7 +74,7 @@ If you just want to test the program without editing the source code, go see the
 
 <br/>
 
-# Credits
+# 🙏 Credits
 
 * [**Angel Uriot**](https://github.com/angeluriot): Co-creator of the project.
 
