@@ -77,7 +77,5 @@ If you just want to test the program without editing the source code, go see the
 # 🙏 Credits
 
 * [**Angel Uriot**](https://github.com/angeluriot): Co-creator of the project.
-
 * [**Arthur Azambe**](https://github.com/arthurazambre): Co-creator of the project.
-
 * [**Guillaume Descomps**](https://github.com/gdescomps): Co-creator of the project.
